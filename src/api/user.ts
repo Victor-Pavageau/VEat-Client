@@ -22,8 +22,7 @@ export type User = {
   };
   phoneNumber: string;
   email: string;
-  note: number | undefined;
-  referedBy: string | undefined;
-  hasRefered: string[] | undefined;
-  profilePicture: string;
+  note?: number;
+  referedBy?: string;
+  hasRefered?: string[];
 };
