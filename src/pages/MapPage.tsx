@@ -1,15 +1,12 @@
-import NavBar from "../components/NavBar"
-import "./MapPage.css"
+import NavBar from "../components/NavBar";
 
 function MapPage() {
   return (
     <>
       <NavBar />
-      <div>
-        Map Page
-      </div>
+      <div>Map Page</div>
     </>
-  )
+  );
 }
 
-export default MapPage
+export default MapPage;

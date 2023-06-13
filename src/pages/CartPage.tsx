@@ -1,15 +1,12 @@
-import NavBar from "../components/NavBar"
-import "./CartPage.css"
+import NavBar from "../components/NavBar";
 
 function CartPage() {
   return (
     <>
       <NavBar />
-      <div>
-        Cart Page
-      </div>
+      <div>Cart Page</div>
     </>
-  )
+  );
 }
 
-export default CartPage
+export default CartPage;

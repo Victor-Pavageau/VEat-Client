@@ -4,8 +4,15 @@ import MapPage from "./pages/MapPage";
 import CartPage from "./pages/CartPage";
 import ProfilePage from "./pages/ProfilePage";
 import RestaurantPage from "./pages/RestaurantPage";
+import NotFoundPage from "./pages/NotFoundPage";
 
-export type Path = "/" | "/map" | "/restaurant/:restaurantId" | "/cart" | "/profile" | "*";
+export type Path =
+  | "/"
+  | "/map"
+  | "/restaurant/:restaurantId"
+  | "/cart"
+  | "/profile"
+  | "*";
 
 export const tp = (path: Path, replace?: string[]): Path | string => {
   if (!replace) {
@@ -34,12 +41,13 @@ function RouteHandler(): JSX.Element {
     <Routes>
       <Route path={tp("/")} element={<HomePage />} />
       <Route path={tp("/map")} element={<MapPage />} />
-      <Route path={tp("/restaurant/:restaurantId")} element={<RestaurantPage />} />
+      <Route
+        path={tp("/restaurant/:restaurantId")}
+        element={<RestaurantPage />}
+      />
       <Route path={tp("/cart")} element={<CartPage />} />
       <Route path={tp("/profile")} element={<ProfilePage />} />
-      <Route path={tp("*")} element={
-        <div className="w-screen h-screen bg-red-600" /> // TODO : Add a NotFound page
-      } />
+      <Route path={tp("*")} element={<NotFoundPage />} />
     </Routes>
   );
 }
