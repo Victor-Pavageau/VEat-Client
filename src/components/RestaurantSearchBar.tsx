@@ -2,17 +2,26 @@ import { Input } from "antd";
 import { BsSearch } from "react-icons/bs";
 import { FiFilter } from "react-icons/fi";
 
-function RestaurantSearchBar() {
+type Props = {
+  setFilterModalIsOpen: (isOpen: boolean) => void;
+}
+
+function RestaurantSearchBar(props: Props) {
+  const { setFilterModalIsOpen } = props
+
   return (
     // TODO : Make the search works
     <Input
-      placeholder="Search your food here"
+      placeholder="Your favorite restaurant"
+      autoFocus={false}
       className="rounded-full flex items-center mt-5 w-full shadow-md"
       size="large"
-      prefix={<BsSearch size={20} className="bg-white p-1 text-[#F97D23]" />}
+      prefix={<BsSearch size={20} className="bg-white p-1" />}
       suffix={
         // TODO : Add modal opening on click
-        <FiFilter size={20} className="bg-white text-[#F97D23] p-1" />
+        <FiFilter size={20} className="bg-white p-1" onClick={() => {
+          setFilterModalIsOpen(true)
+        }} />
       }
     />
   );

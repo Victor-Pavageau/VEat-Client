@@ -16,7 +16,7 @@ function NavBar() {
   }
 
   return (
-    <div className="absolute bg-black bottom-10 left-10 right-10 rounded-2xl h-16 text-white flex justify-around items-center">
+    <div className="absolute bg-black bottom-10 left-7 right-7 rounded-2xl h-14 text-white flex justify-around items-center">
       <BsHouse className={`bg-transparent ${isActivePage("/") ? "text-[#F9D423]" : "text-white"}`} size={25} onClick={() => {
         navigate(tp("/"))
       }} />
