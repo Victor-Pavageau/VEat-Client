@@ -27,6 +27,7 @@ function CreateAccountBody() {
               <Input
                 className="bg-[#EBEBEB] hover:bg-[#EBEBEB] focus:bg-[#EBEBEB]"
                 bordered={false}
+                required
                 size="large"
               />
             </Form.Item>
@@ -40,6 +41,7 @@ function CreateAccountBody() {
             <Input
               className="bg-[#EBEBEB] hover:bg-[#EBEBEB] focus:bg-[#EBEBEB]"
               bordered={false}
+              required
               size="large"
             />
           </Form.Item>
@@ -52,6 +54,7 @@ function CreateAccountBody() {
             <Input
               className="bg-[#EBEBEB] hover:bg-[#EBEBEB] focus:bg-[#EBEBEB]"
               bordered={false}
+              required
               size="large"
             />
           </Form.Item>
@@ -64,6 +67,7 @@ function CreateAccountBody() {
             <Input
               className="bg-[#EBEBEB] hover:bg-[#EBEBEB] focus:bg-[#EBEBEB]"
               bordered={false}
+              required
               size="large"
             />
           </Form.Item>
