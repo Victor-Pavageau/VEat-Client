@@ -18,7 +18,8 @@ function RestaurantSearchBar(props: Props) {
       size="large"
       prefix={<BsSearch size={20} className="bg-white p-1" />}
       suffix={
-        <FiFilter size={20} className="bg-white p-1" onClick={() => {
+        <FiFilter size={20} className="bg-white p-1" onClick={(event: React.MouseEvent<SVGElement>) => {
+          event.stopPropagation();
           setFilterModalIsOpen(true)
         }} />
       }
