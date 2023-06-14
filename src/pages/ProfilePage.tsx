@@ -30,7 +30,7 @@ function ProfilePage() {
   return (
     <>
       <div className="background-gradient-yellow-orange w-screen h-screen">
-        <div className="flex ml-7 pt-10">
+        <div className="flex ml-7 pt-10 justify-between">
           <FiChevronLeft size={35} className="justify-start w-fit" onClick={() => { window.history.back() }} />
         </div>
         {isAuthenticated ? <AuthenticatedHeaderProfile testUser={testUser} /> : <UnauthenticatedHeaderProfile />}
