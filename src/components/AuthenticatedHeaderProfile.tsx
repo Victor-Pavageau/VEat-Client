@@ -13,8 +13,8 @@ function AuthenticatedHeaderProfile(props: Props) {
         {testUser.username.name[0] + testUser.username.surname[0]}
       </div>
       <div className="w-full">
-        <div className="text-xs right-2 absolute top-52">
-          Refering code : {testUser.uid}
+        <div className="text-xs justify-center flex items-center mt-32">
+          Referral code : {testUser.email}
         </div>
       </div>
     </div>
