@@ -18,7 +18,6 @@ function RestaurantSearchBar(props: Props) {
       size="large"
       prefix={<BsSearch size={20} className="bg-white p-1" />}
       suffix={
-        // TODO : Add modal opening on click
         <FiFilter size={20} className="bg-white p-1" onClick={() => {
           setFilterModalIsOpen(true)
         }} />
