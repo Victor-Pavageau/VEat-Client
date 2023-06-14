@@ -5,6 +5,8 @@ import CartPage from "./pages/CartPage";
 import ProfilePage from "./pages/ProfilePage";
 import RestaurantPage from "./pages/RestaurantPage";
 import NotFoundPage from "./pages/NotFoundPage";
+import ForgotPassword from "./pages/ForgotPassword";
+import CreateAccount from "./pages/CreateAccount";
 
 export type Path =
   | "/"
@@ -12,6 +14,8 @@ export type Path =
   | "/restaurant/:restaurantId"
   | "/cart"
   | "/profile"
+  | "/profile/create-account"
+  | "/profile/forgot-password"
   | "*";
 
 export const tp = (path: Path, replace?: string[]): Path | string => {
@@ -47,6 +51,8 @@ function RouteHandler(): JSX.Element {
       />
       <Route path={tp("/cart")} element={<CartPage />} />
       <Route path={tp("/profile")} element={<ProfilePage />} />
+      <Route path={tp("/profile/create-account")} element={<CreateAccount />} />
+      <Route path={tp("/profile/forgot-password")} element={<ForgotPassword />} />
       <Route path={tp("*")} element={<NotFoundPage />} />
     </Routes>
   );

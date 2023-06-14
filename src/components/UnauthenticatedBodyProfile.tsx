@@ -1,6 +1,7 @@
 import { Button, Input } from "antd"
-import { BsFacebook } from "react-icons/bs"
 import { FcGoogle } from "react-icons/fc"
+import { useNavigate } from "react-router";
+import { tp } from "../routing";
 
 type Props = {
   setAuthenticatedUser: (isAuthenticated: boolean) => void;
@@ -8,6 +9,9 @@ type Props = {
 
 function UnauthenticatedBodyProfile(props: Props) {
   const { setAuthenticatedUser } = props;
+
+  const navigate = useNavigate()
+
   return (
     <>
       <div className="flex flex-col px-12 pt-12 text-[#707070] gap-y-2">
@@ -17,9 +21,11 @@ function UnauthenticatedBodyProfile(props: Props) {
         Password
         <Input size="large" className="bg-[#EBEBEB] hover:bg-[#EBEBEB] focus:bg-[#EBEBEB]" bordered={false} placeholder="*********" type="password" />
         <div className="text-xs mt-1 flex justify-end">
-          <a href="./" className="underline text-[#707070]">
+          <div className="underline text-[#707070]" onClick={() => {
+            navigate(tp("/profile/forgot-password"))
+          }}>
             Forgot password
-          </a>
+          </div>
         </div>
       </div>
       <div className="flex flex-col px-12 justify-center items-center">
@@ -30,20 +36,17 @@ function UnauthenticatedBodyProfile(props: Props) {
             Log in
           </div>
         </Button>
-        <Button className="flex justify-center items-center w-min mt-10 border-2" type="primary" ghost size="large">
+        <Button className="flex justify-center items-center w-min mt-7 border-2" type="primary" ghost size="large">
           <div className="flex justify-center items-center mx-1 gap-2 text-sm">
             <FcGoogle size={20} /> Connect with Google
-          </div>
-        </Button>
-        <Button className="flex justify-center items-center w-min mt-5 border-2" type="primary" ghost size="large">
-          <div className="flex justify-center items-center mx-1 gap-2 text-sm">
-            <BsFacebook className="text-[#395998]" size={20} /> Connect with Facebook
           </div>
         </Button>
       </div>
       <div className="flex flex-col px-12 mt-10 pb-3 text-[#707070]">
         <div>
-          If you don't have an account, please, <a className="text-[#F97D23]" href="/">Sign up here</a>
+          If you don't have an account, please, <b className="text-[#F97D23] underline" onClick={() => {
+            navigate(tp("/profile/create-account"))
+          }}>Sign up here</b>
         </div>
       </div>
     </>

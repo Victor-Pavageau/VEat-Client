@@ -81,13 +81,13 @@ function AuthenticatedBodyProfile(props: Props) {
       </div>
       <div className="flex flex-col px-12 justify-center items-center">
         <Form.Item>
-          <Button className="flex justify-center items-center w-min mt-10" type="primary" size="large" htmlType="submit">
+          <Button className="flex justify-center items-center w-min mt-5" type="primary" size="large" htmlType="submit">
             <div className="flex justify-center items-center mx-2">
               Save changes
             </div>
           </Button>
         </Form.Item>
-        <Button className="flex justify-center items-center w-min" danger size="large">
+        <Button className="flex justify-center items-center w-min mb-3" danger size="large">
           <div className="flex justify-center items-center mx-2 gap-3">
             <AiOutlineDelete size={20} /> Delete my account
           </div>
