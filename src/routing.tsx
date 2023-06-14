@@ -52,7 +52,10 @@ function RouteHandler(): JSX.Element {
       <Route path={tp("/cart")} element={<CartPage />} />
       <Route path={tp("/profile")} element={<ProfilePage />} />
       <Route path={tp("/profile/create-account")} element={<CreateAccount />} />
-      <Route path={tp("/profile/forgot-password")} element={<ForgotPassword />} />
+      <Route
+        path={tp("/profile/forgot-password")}
+        element={<ForgotPassword />}
+      />
       <Route path={tp("*")} element={<NotFoundPage />} />
     </Routes>
   );
