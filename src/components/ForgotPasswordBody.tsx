@@ -12,12 +12,12 @@ function ForgotPasswordBody() {
       onFinish={onFinish}
       className="mt-10"
     >
-      <div className="flex flex-col px-12 pt-1 text-[#707070] gap-y-2">
+      <div className="flex flex-col px-12 pt-1 text-[--gray] gap-y-2">
         <div className="flex flex-col gap-1">
           Account email
           <Form.Item required name={"email"}>
             <Input
-              className="bg-[#EBEBEB] hover:bg-[#EBEBEB] focus:bg-[#EBEBEB]"
+              className="bg-[--light-gray] hover:bg-[--light-gray] focus:bg-[--light-gray]"
               bordered={false}
               required
               size="large"

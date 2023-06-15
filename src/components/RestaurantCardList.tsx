@@ -10,7 +10,7 @@ function RestaurantCardList(props: Props) {
   const { restaurantList } = props;
 
   return (
-    <div className="text-xs text-[#707070] mt-2">
+    <div className="text-xs text-[--gray] mt-2">
       {restaurantList.length} restaurants found.
       <div className="h-[50vh] overflow-y-auto mt-2 text-base text-black">
         {restaurantList.map((restaurant, id) => {
@@ -38,17 +38,17 @@ function RestaurantCardList(props: Props) {
                   {
                     // TODO : Replace this fake datas by real operations
                   }
-                  <div className="bg-transparent mb-1 text-[#707070] flex gap-1">
+                  <div className="bg-transparent mb-1 text-[--gray] flex gap-1">
                     <BsClock
                       size={15}
-                      className="text-[#F97D23] bg-white p-1"
+                      className="text-[--orange] bg-white p-1"
                     />
                     30 mins
                   </div>
-                  <div className="bg-transparent mb-1 text-[#707070] flex gap-1">
+                  <div className="bg-transparent mb-1 text-[--gray] flex gap-1">
                     <BsFillStarFill
                       size={15}
-                      className="text-[#F97D23] bg-white p-1"
+                      className="text-[--orange] bg-white p-1"
                     />
                     4.5
                   </div>

@@ -29,7 +29,7 @@ function ProfilePage() {
 
   return (
     <>
-      <div className="background-gradient-yellow-orange w-screen h-screen">
+      <div className="background-gradient-yellow-orange w-screen h-screen relative">
         <div className="flex ml-7 pt-10 justify-between">
           <FiChevronLeft
             size={35}

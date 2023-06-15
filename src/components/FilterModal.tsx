@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
 import { Tag, tags } from "../api/common";
 import { Checkbox, Select } from "antd";
-import "./FilterModal.css"
+import "./FilterModal.css";
 
 type Props = {
   addFilter: (filter: Tag) => void;
@@ -9,13 +9,19 @@ type Props = {
   selectedFilterList: Tag[];
   restaurantRadius: string;
   setRestaurantRadius: (restaurantRadius: string) => void;
-}
+};
 
 function FilterModal(props: Props) {
-  const { addFilter, removeFilter, selectedFilterList, restaurantRadius, setRestaurantRadius } = props
+  const {
+    addFilter,
+    removeFilter,
+    selectedFilterList,
+    restaurantRadius,
+    setRestaurantRadius,
+  } = props;
 
   const changeRadius = (value: string) => {
-    setRestaurantRadius(value)
+    setRestaurantRadius(value);
   };
 
   return (
@@ -27,31 +33,39 @@ function FilterModal(props: Props) {
           className="w-20"
           onChange={changeRadius}
           options={[
-            { value: '2', label: '2km' },
-            { value: '5', label: '5km' },
-            { value: '10', label: '10km' },
-            { value: '20', label: '20km' },
+            { value: "2", label: "2km" },
+            { value: "5", label: "5km" },
+            { value: "10", label: "10km" },
+            { value: "20", label: "20km" },
           ]}
-        /> radius
+        />{" "}
+        radius
       </div>
       <div className="flex flex-col gap-3 overflow-y-auto h-80">
-        {
-          tags.map((tag) => {
-            return (
-              <Checkbox value={tag} key={nanoid()} checked={selectedFilterList.includes(tag)} className={selectedFilterList.includes(tag) ? "text-[#F97D23]" : undefined} onChange={(checked) => {
+        {tags.map((tag) => {
+          return (
+            <Checkbox
+              value={tag}
+              key={nanoid()}
+              checked={selectedFilterList.includes(tag)}
+              className={
+                selectedFilterList.includes(tag) ? "text-[--orange]" : undefined
+              }
+              onChange={(checked) => {
                 if (checked.target.checked) {
-                  addFilter(tag)
+                  addFilter(tag);
+                } else {
+                  removeFilter(tag);
                 }
-                else {
-                  removeFilter(tag)
-                }
-              }}>{tag}</Checkbox>
-            )
-          })
-        }
+              }}
+            >
+              {tag}
+            </Checkbox>
+          );
+        })}
       </div>
     </>
-  )
+  );
 }
 
-export default FilterModal
+export default FilterModal;

@@ -4,7 +4,7 @@ import ForgotPasswordHeader from "../components/ForgotPasswordHeader";
 
 function ForgotPassword() {
   return (
-    <div className="background-gradient-yellow-orange w-screen h-screen">
+    <div className="background-gradient-yellow-orange w-screen h-screen relative">
       <div className="flex ml-7 pt-10">
         <FiChevronLeft
           size={35}

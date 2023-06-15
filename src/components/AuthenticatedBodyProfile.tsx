@@ -26,7 +26,7 @@ function AuthenticatedBodyProfile(props: Props) {
       {
         // TODO : Provide with the real values
       }
-      <div className="flex flex-col px-12 pt-8 text-[#707070] gap-y-2">
+      <div className="flex flex-col px-12 pt-8 text-[--gray] gap-y-2">
         <div className="flex gap-3">
           <div className="flex flex-col gap-1">
             Name
@@ -37,7 +37,7 @@ function AuthenticatedBodyProfile(props: Props) {
             >
               <Input
                 required
-                className="bg-[#EBEBEB] hover:bg-[#EBEBEB] focus:bg-[#EBEBEB]"
+                className="bg-[--light-gray] hover:bg-[--light-gray] focus:bg-[--light-gray]"
                 disabled={isNameDisabled}
                 bordered={false}
                 suffix={
@@ -63,7 +63,7 @@ function AuthenticatedBodyProfile(props: Props) {
             >
               <Input
                 required
-                className="bg-[#EBEBEB] hover:bg-[#EBEBEB] focus:bg-[#EBEBEB]"
+                className="bg-[--light-gray] hover:bg-[--light-gray] focus:bg-[--light-gray]"
                 disabled={isSurameDisabled}
                 bordered={false}
                 suffix={
@@ -82,7 +82,7 @@ function AuthenticatedBodyProfile(props: Props) {
           </div>
         </div>
       </div>
-      <div className="flex flex-col px-12 pt-1 text-[#707070] gap-y-2">
+      <div className="flex flex-col px-12 pt-1 text-[--gray] gap-y-2">
         <div className="flex flex-col gap-1">
           Home address
           <Form.Item
@@ -92,7 +92,7 @@ function AuthenticatedBodyProfile(props: Props) {
           >
             <Input
               required
-              className="bg-[#EBEBEB] hover:bg-[#EBEBEB] focus:bg-[#EBEBEB]"
+              className="bg-[--light-gray] hover:bg-[--light-gray] focus:bg-[--light-gray]"
               disabled={isAddressDisabled}
               bordered={false}
               suffix={
@@ -110,7 +110,7 @@ function AuthenticatedBodyProfile(props: Props) {
           </Form.Item>
         </div>
       </div>
-      <div className="flex flex-col px-12 pt-1 text-[#707070] gap-y-2">
+      <div className="flex flex-col px-12 pt-1 text-[--gray] gap-y-2">
         <div className="flex flex-col gap-1">
           Phone number
           <Form.Item
@@ -120,7 +120,7 @@ function AuthenticatedBodyProfile(props: Props) {
           >
             <Input
               required
-              className="bg-[#EBEBEB] hover:bg-[#EBEBEB] focus:bg-[#EBEBEB]"
+              className="bg-[--light-gray] hover:bg-[--light-gray] focus:bg-[--light-gray]"
               disabled={isPhoneDisabled}
               bordered={false}
               suffix={
@@ -138,13 +138,13 @@ function AuthenticatedBodyProfile(props: Props) {
           </Form.Item>
         </div>
       </div>
-      <div className="flex flex-col px-12 pt-1 text-[#707070] gap-y-2">
+      <div className="flex flex-col px-12 pt-1 text-[--gray] gap-y-2">
         <div className="flex flex-col gap-1">
           Email
           <Form.Item required name={"email"} initialValue={testUser.email}>
             <Input
               required
-              className="bg-[#EBEBEB] hover:bg-[#EBEBEB] focus:bg-[#EBEBEB]"
+              className="bg-[--light-gray] hover:bg-[--light-gray] focus:bg-[--light-gray]"
               disabled={isEmailDisabled}
               bordered={false}
               suffix={

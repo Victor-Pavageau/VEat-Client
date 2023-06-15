@@ -9,7 +9,7 @@ function AuthenticatedHeaderProfile(props: Props) {
 
   return (
     <div className="flex flex-col justify-center items-center">
-      <div className="absolute right-[35vw] top-10 h-32 w-32 bg-[#F97D23] rounded-full flex justify-center items-center text-6xl font-light border border-solid">
+      <div className="absolute right-[35vw] top-10 h-32 w-32 bg-[--orange] rounded-full flex justify-center items-center text-6xl font-light border border-solid">
         {testUser.username.name[0] + testUser.username.surname[0]}
       </div>
       <div className="w-full">

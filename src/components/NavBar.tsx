@@ -1,36 +1,60 @@
-import { BsCart2, BsHouse } from "react-icons/bs"
-import { FiUser } from "react-icons/fi"
-import { HiOutlineLocationMarker } from "react-icons/hi"
-import { tp } from "../routing"
-import { useLocation, useNavigate } from "react-router-dom"
+import { BsCart2, BsHouse } from "react-icons/bs";
+import { FiUser } from "react-icons/fi";
+import { HiOutlineLocationMarker } from "react-icons/hi";
+import { tp } from "../routing";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function NavBar() {
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const location = useLocation();
 
   const isActivePage = (currentPage: string) => {
     if (currentPage.length > 1) {
-      return location.pathname.includes(currentPage)
+      return location.pathname.includes(currentPage);
     }
-    return currentPage === location.pathname
-  }
+    return currentPage === location.pathname;
+  };
 
   return (
     <div className="absolute bg-black bottom-10 left-7 right-7 rounded-2xl h-14 text-white flex justify-around items-center">
-      <BsHouse className={`bg-transparent ${isActivePage("/") ? "text-[#F9D423]" : "text-white"}`} size={25} onClick={() => {
-        navigate(tp("/"))
-      }} />
-      <HiOutlineLocationMarker className={`bg-transparent ${isActivePage("map") ? "text-[#F9D423]" : "text-white"}`} size={25} onClick={() => {
-        navigate(tp("/map"))
-      }} />
-      <BsCart2 className={`bg-transparent ${isActivePage("cart") ? "text-[#F9D423]" : "text-white"}`} size={25} onClick={() => {
-        navigate(tp("/cart"))
-      }} />
-      <FiUser className={`bg-transparent ${isActivePage("profile") ? "text-[#F9D423]" : "text-white"}`} size={25} onClick={() => {
-        navigate(tp("/profile"))
-      }} />
+      <BsHouse
+        className={`bg-transparent ${
+          isActivePage("/") ? "text-[--yellow]" : "text-white"
+        }`}
+        size={25}
+        onClick={() => {
+          navigate(tp("/"));
+        }}
+      />
+      <HiOutlineLocationMarker
+        className={`bg-transparent ${
+          isActivePage("map") ? "text-[--yellow]" : "text-white"
+        }`}
+        size={25}
+        onClick={() => {
+          navigate(tp("/map"));
+        }}
+      />
+      <BsCart2
+        className={`bg-transparent ${
+          isActivePage("cart") ? "text-[--yellow]" : "text-white"
+        }`}
+        size={25}
+        onClick={() => {
+          navigate(tp("/cart"));
+        }}
+      />
+      <FiUser
+        className={`bg-transparent ${
+          isActivePage("profile") ? "text-[--yellow]" : "text-white"
+        }`}
+        size={25}
+        onClick={() => {
+          navigate(tp("/profile"));
+        }}
+      />
     </div>
-  )
+  );
 }
 
-export default NavBar
+export default NavBar;

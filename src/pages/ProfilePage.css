@@ -1,3 +1,7 @@
-div.background-gradient-yellow-orange{
-  background: -webkit-linear-gradient(270deg, #F9D423 0%, #F97D23 100%);
+div.background-gradient-yellow-orange {
+  background: -webkit-linear-gradient(
+    270deg,
+    var(--yellow) 0%,
+    var(--orange) 100%
+  );
 }
