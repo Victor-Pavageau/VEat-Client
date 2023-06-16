@@ -69,8 +69,10 @@ function RestaurantPage() {
               </div>
             </div>
             :
-            <div>
-              Error : restaurant not found
+            <div className="bg-[--white-smoke] h-screen flex justify-center pt-10">
+              <h2>
+                Error : restaurant not found
+              </h2>
             </div>
         }
       </div>

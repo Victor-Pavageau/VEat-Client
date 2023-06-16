@@ -10,22 +10,21 @@ import FilterModal from "../components/FilterModal";
 import { useGetAllRestaurants } from "../hooks/restaurants/useGetAllRestaurants";
 import { LoadingOutlined } from "@ant-design/icons";
 
-function HomePage() {
+type Props = {
+  selectedFilterList: Tag[];
+  addFilter: (filter: Tag) => void;
+  removeFilter: (filter: Tag) => void;
+};
+
+function HomePage(props: Props) {
+  const { selectedFilterList, addFilter, removeFilter } = props;
   const logo = transparentLogo;
 
-  const [selectedFilterList, setSelectedFilterList] = useState<Tag[]>([]);
   const [filterModalIsOpen, setFilterModalIsOpen] = useState(false);
   const [restaurantRadius, setRestaurantRadius] = useState("2");
   const { data: restaurantList, isLoading } = useGetAllRestaurants();
 
-  const addFilter = (filter: Tag) => {
-    setSelectedFilterList([...selectedFilterList, filter]);
-  };
 
-  const removeFilter = (filter: Tag) => {
-    selectedFilterList.splice(selectedFilterList.indexOf(filter), 1);
-    setSelectedFilterList([...selectedFilterList]);
-  };
 
   return (
     <div className="bg-[--white-smoke]">
@@ -71,13 +70,13 @@ function HomePage() {
             <div>
               {
                 isLoading ?
-                  <div className="bg-[--white-smoke] h-[50vh]">
+                  <div className="bg-[--white-smoke] h-[58.5vh]">
                     <div className="flex justify-center items-center mt-10">
                       <Spin indicator={<LoadingOutlined spin style={{ fontSize: 40 }} />} className="text-[--orange]" />
                     </div>
                   </div>
                   :
-                  <div>
+                  <div className="bg-[--white-smoke] h-[63.5vh] flex justify-center items-center">
                     Error : no restaurant found
                   </div>
               }

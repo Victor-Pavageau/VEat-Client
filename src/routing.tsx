@@ -7,6 +7,8 @@ import RestaurantPage from "./pages/RestaurantPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ForgotPassword from "./pages/ForgotPassword";
 import CreateAccount from "./pages/CreateAccount";
+import { useState } from "react";
+import { Tag } from "./api/common";
 
 export type Path =
   | "/"
@@ -41,10 +43,21 @@ const replacePlaceholders = (url: Path, replaceArray: string[]): string => {
 };
 
 function RouteHandler(): JSX.Element {
+  const [selectedFilterList, setSelectedFilterList] = useState<Tag[]>([]);
+
+  const addFilter = (filter: Tag) => {
+    setSelectedFilterList([...selectedFilterList, filter]);
+  };
+
+  const removeFilter = (filter: Tag) => {
+    selectedFilterList.splice(selectedFilterList.indexOf(filter), 1);
+    setSelectedFilterList([...selectedFilterList]);
+  };
+
   return (
     <Routes>
-      <Route path={tp("/")} element={<HomePage />} />
-      <Route path={tp("/map")} element={<MapPage />} />
+      <Route path={tp("/")} element={<HomePage addFilter={addFilter} removeFilter={removeFilter} selectedFilterList={selectedFilterList} />} />
+      <Route path={tp("/map")} element={<MapPage addFilter={addFilter} removeFilter={removeFilter} selectedFilterList={selectedFilterList} />} />
       <Route
         path={tp("/restaurant/:restaurantId")}
         element={<RestaurantPage />}
