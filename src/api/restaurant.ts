@@ -26,15 +26,21 @@ export type Restaurant = {
   ];
 };
 
-type RestaurantResponse = {
+type GetAllRestaurantsResponse = {
   state: string;
   message: string;
   restaurants: Restaurant[];
 };
 
+type GetRestaurantsByIdResponse = {
+  state: string;
+  message: string;
+  restaurant: Restaurant;
+};
+
 export const fetchAllRestaurants = async (): Promise<Restaurant[]> => {
   return await axios
-    .get<RestaurantResponse>("http://localhost:3002/restaurants")
+    .get<GetAllRestaurantsResponse>("http://localhost:3002/restaurants")
     .then((result) => result.data.restaurants);
 };
 
@@ -42,6 +48,8 @@ export const fetchRestaurantById = async (
   restaurantId: string
 ): Promise<Restaurant> => {
   return await axios
-    .get<Restaurant>(`http://localhost:3002/restaurant/${restaurantId}`)
-    .then((result) => result.data);
+    .get<GetRestaurantsByIdResponse>(
+      `http://localhost:3002/restaurant/${restaurantId}`
+    )
+    .then((result) => result.data.restaurant);
 };

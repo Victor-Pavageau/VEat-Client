@@ -5,9 +5,10 @@ import { Tag } from "../api/common";
 import { useState } from "react";
 import RestaurantSearchBar from "../components/RestaurantSearchBar";
 import NavBar from "../components/NavBar";
-import { Modal } from "antd";
+import { Modal, Spin } from "antd";
 import FilterModal from "../components/FilterModal";
 import { useGetAllRestaurants } from "../hooks/restaurants/useGetAllRestaurants";
+import { LoadingOutlined } from "@ant-design/icons";
 
 function HomePage() {
   const logo = transparentLogo;
@@ -66,8 +67,20 @@ function HomePage() {
           // TODO : Check what happens if restaurantList is empty and add an error message
           restaurantList ?
             <RestaurantCardList restaurantList={restaurantList} />
-            : <div>
-              Waiting for API connexion. IsLoading : {isLoading}
+            :
+            <div>
+              {
+                isLoading ?
+                  <div className="bg-[--white-smoke] h-[50vh]">
+                    <div className="flex justify-center items-center mt-10">
+                      <Spin indicator={<LoadingOutlined spin style={{ fontSize: 40 }} />} className="text-[--orange]" />
+                    </div>
+                  </div>
+                  :
+                  <div>
+                    Error : no restaurant found
+                  </div>
+              }
             </div>
         }
       </div>
