@@ -1,5 +1,24 @@
+import { useParams } from "react-router";
+
 function RestaurantPage() {
-  return <div>Restaurant Page</div>;
+  const { restaurantId } = useParams();
+
+  return (
+    <div>
+      {
+        restaurantId ?
+          <div>
+            Restaurant Page {restaurantId}
+          </div>
+          : <div>
+            Restaurant not found
+            {
+              // TODO : Add a home button here
+            }
+          </div>
+      }
+    </div>
+  );
 }
 
 export default RestaurantPage;

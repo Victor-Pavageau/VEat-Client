@@ -1,6 +1,8 @@
 import { BsClock, BsFillStarFill } from "react-icons/bs";
 import { Restaurant } from "../api/restaurant";
 import { nanoid } from "nanoid";
+import { useNavigate } from "react-router";
+import { tp } from "../routing";
 
 type Props = {
   restaurantList: Restaurant[];
@@ -9,26 +11,25 @@ type Props = {
 function RestaurantCardList(props: Props) {
   const { restaurantList } = props;
 
+  const navigate = useNavigate()
+
   return (
     <div className="text-xs text-[--gray] mt-2">
       {restaurantList.length} restaurants found.
       <div className="h-[50vh] overflow-y-auto mt-2 text-base text-black">
         {restaurantList.map((restaurant, id) => {
           return (
-            // TODO : Add on click event to open restaurant menu
             <div
-              className={`bg-white mb-7 rounded-2xl flex shadow-md ${
-                id === restaurantList.length - 1 ? "max-[380px]:mb-14" : ""
-              }`}
+              className="bg-white mb-7 rounded-2xl flex shadow-md h-36"
               key={nanoid()}
+              onClick={() => {
+                navigate(tp("/restaurant/:restaurantId", [restaurant.uid]))
+              }}
             >
-              {
-                // TODO : Deal with non-square images
-              }
               <img
                 src={restaurant.logo}
                 alt={`${restaurant.restaurantName} logo`}
-                className="w-1/2 rounded-l-2xl shadow-md"
+                className="w-1/2 rounded-l-2xl shadow-md h-full object-cover"
               />
               <div className="ml-2 flex flex-col bg-white justify-between rounded-r-2xl">
                 <div className="bg-transparent mt-1 font-bold whitespace-pre-wrap">
