@@ -7,13 +7,18 @@ import RestaurantPage from "./pages/RestaurantPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import ForgotPassword from "./pages/ForgotPassword";
 import CreateAccount from "./pages/CreateAccount";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Tag } from "./api/common";
+import ArticlePage from "./pages/ArticlePage";
+import { Coordinates } from "./api/user";
+import MenuPage from "./pages/MenuPage";
 
 export type Path =
   | "/"
   | "/map"
   | "/restaurant/:restaurantId"
+  | "/article/:articleId"
+  | "/menu/:menuId"
   | "/cart"
   | "/profile"
   | "/profile/create-account"
@@ -44,6 +49,23 @@ const replacePlaceholders = (url: Path, replaceArray: string[]): string => {
 
 function RouteHandler(): JSX.Element {
   const [selectedFilterList, setSelectedFilterList] = useState<Tag[]>([]);
+  const [userCoordinates, setUserCoordinates] = useState<Coordinates | undefined>()
+
+  const getLocation = () => {
+    navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => {
+      setUserCoordinates(
+        {
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        }
+      )
+    });
+  };
+
+
+  useEffect(() => {
+    getLocation()
+  }, [])
 
   const addFilter = (filter: Tag) => {
     setSelectedFilterList([...selectedFilterList, filter]);
@@ -56,11 +78,19 @@ function RouteHandler(): JSX.Element {
 
   return (
     <Routes>
-      <Route path={tp("/")} element={<HomePage addFilter={addFilter} removeFilter={removeFilter} selectedFilterList={selectedFilterList} />} />
-      <Route path={tp("/map")} element={<MapPage addFilter={addFilter} removeFilter={removeFilter} selectedFilterList={selectedFilterList} />} />
+      <Route path={tp("/")} element={<HomePage addFilter={addFilter} removeFilter={removeFilter} selectedFilterList={selectedFilterList} userCoordinates={userCoordinates} />} />
+      <Route path={tp("/map")} element={<MapPage addFilter={addFilter} removeFilter={removeFilter} selectedFilterList={selectedFilterList} userCoordinates={userCoordinates} />} />
       <Route
         path={tp("/restaurant/:restaurantId")}
         element={<RestaurantPage />}
+      />
+      <Route
+        path={tp("/article/:articleId")}
+        element={<ArticlePage />}
+      />
+      <Route
+        path={tp("/menu/:menuId")}
+        element={<MenuPage />}
       />
       <Route path={tp("/cart")} element={<CartPage />} />
       <Route path={tp("/profile")} element={<ProfilePage />} />

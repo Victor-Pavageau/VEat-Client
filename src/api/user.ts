@@ -13,11 +13,9 @@ export type User = {
     name: string;
     surname: string;
   };
-  // password
-  // token
   address: {
-    longitude: string; // Use it for React Leaflet
-    latitude: string; // Use it for React Leaflet
+    longitude: string;
+    latitude: string;
     fullAddress: string;
   };
   phoneNumber: string;
@@ -25,4 +23,9 @@ export type User = {
   note?: number;
   referedBy?: string;
   hasRefered?: string[];
+};
+
+export type Coordinates = {
+  latitude: number;
+  longitude: number;
 };

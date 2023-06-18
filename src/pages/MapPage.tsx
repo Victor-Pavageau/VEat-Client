@@ -1,21 +1,18 @@
 import NavBar from "../components/NavBar";
 import ShortcutFilterList from "../components/ShortcutFilterList";
 import { Tag } from "../api/common";
-import {
-  MapContainer,
-  ScaleControl,
-  TileLayer,
-  ZoomControl
-} from "react-leaflet";
+import TrackOrderMap from "../components/TrackOrderMap";
+import { Coordinates } from "../api/user";
 
 type Props = {
   selectedFilterList: Tag[];
   addFilter: (filter: Tag) => void;
   removeFilter: (filter: Tag) => void;
+  userCoordinates: Coordinates | undefined
 };
 
 function MapPage(props: Props) {
-  const { selectedFilterList, addFilter, removeFilter } = props;
+  const { selectedFilterList, addFilter, removeFilter, userCoordinates } = props;
 
   return (
     <>
@@ -33,13 +30,7 @@ function MapPage(props: Props) {
             {
               // TODO : Provide default position with user coordinates
             }
-            <MapContainer center={[51.505, -0.09]} zoom={15} minZoom={10} scrollWheelZoom zoomControl={false} className="flex h-full">
-              <ScaleControl position="topleft" />
-              <ZoomControl position="bottomright" />
-              <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-              />
-            </MapContainer>
+            <TrackOrderMap userCoordinates={userCoordinates} />
           </div>
           <div className="mt-3">
             Restaurant informations

@@ -11,6 +11,14 @@
   --white-smoke: #f5f5f5;
 }
 
+.leaflet-routing-alternatives-container{
+  visibility: hidden;
+}
+
+.leaflet-routing-container.leaflet-bar.leaflet-routing-container-hide.leaflet-routing-collapsible.leaflet-control{
+  visibility: hidden;
+}
+
 html,
 body,
 * {

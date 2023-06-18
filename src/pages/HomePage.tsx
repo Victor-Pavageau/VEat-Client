@@ -1,4 +1,4 @@
-import transparentLogo from "../assets/logo/transparent_logo.png";
+import transparentLogo from "../assets/transparent_logo.png";
 import RestaurantCardList from "../components/RestaurantCardList";
 import ShortcutFilterList from "../components/ShortcutFilterList";
 import { Tag } from "../api/common";
@@ -9,22 +9,23 @@ import { Modal, Spin } from "antd";
 import FilterModal from "../components/FilterModal";
 import { useGetAllRestaurants } from "../hooks/restaurants/useGetAllRestaurants";
 import { LoadingOutlined } from "@ant-design/icons";
+import { Coordinates } from "../api/user";
 
 type Props = {
   selectedFilterList: Tag[];
   addFilter: (filter: Tag) => void;
   removeFilter: (filter: Tag) => void;
+  userCoordinates: Coordinates | undefined
 };
 
 function HomePage(props: Props) {
-  const { selectedFilterList, addFilter, removeFilter } = props;
+  const { selectedFilterList, addFilter, removeFilter, userCoordinates } = props;
+  // TODO : If userCoordinates !== undefined => use the getRestaurantInRadius endpoint
   const logo = transparentLogo;
 
   const [filterModalIsOpen, setFilterModalIsOpen] = useState(false);
   const [restaurantRadius, setRestaurantRadius] = useState("2");
   const { data: restaurantList, isLoading } = useGetAllRestaurants();
-
-
 
   return (
     <div className="bg-[--white-smoke]">

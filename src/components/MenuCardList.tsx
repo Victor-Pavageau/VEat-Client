@@ -1,5 +1,7 @@
 import { nanoid } from "nanoid";
 import { Menu } from "../api/common";
+import { tp } from "../routing";
+import { useNavigate } from "react-router-dom";
 
 type Props = {
   menuList: Menu[];
@@ -7,6 +9,8 @@ type Props = {
 
 function MenuCardList(props: Props) {
   const { menuList } = props;
+
+  const navigate = useNavigate()
 
   const truncateTextWithEllipsis = (text: string) => {
     const maxLenght = 75
@@ -24,6 +28,9 @@ function MenuCardList(props: Props) {
             <div
               className="bg-white mb-7 rounded-2xl flex shadow-md h-36"
               key={nanoid()}
+              onClick={() => {
+                navigate(tp("/menu/:menuId", [menu.uid]))
+              }}
             >
               <img
                 src={menu.photo}

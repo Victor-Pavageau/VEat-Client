@@ -1,5 +1,7 @@
 import { nanoid } from "nanoid";
 import { Article } from "../api/common";
+import { useNavigate } from "react-router-dom";
+import { tp } from "../routing";
 
 type Props = {
   articleList: Article[];
@@ -7,6 +9,8 @@ type Props = {
 
 function ArticleCardList(props: Props) {
   const { articleList } = props;
+
+  const navigate = useNavigate()
 
   const truncateTextWithEllipsis = (text: string) => {
     const maxLenght = 75
@@ -24,6 +28,9 @@ function ArticleCardList(props: Props) {
             <div
               className="bg-white mb-7 rounded-2xl flex shadow-md h-36"
               key={nanoid()}
+              onClick={() => {
+                navigate(tp("/article/:articleId", [article.uid]))
+              }}
             >
               <img
                 src={article.photo}
