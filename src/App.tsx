@@ -11,7 +11,7 @@ function App() {
       theme={{
         token: {
           colorPrimary: '#000000',
-        }
+        },
       }}
     >
       <QueryClientProvider client={queryClient}>

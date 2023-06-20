@@ -38,3 +38,10 @@ export type Order = {
     }
   ];
 };
+
+export type TempOrder = [
+  {
+    articleId: string;
+    quantity: number;
+  }
+];

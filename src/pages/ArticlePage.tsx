@@ -3,9 +3,13 @@ import "./ArticlePage.css";
 import { FiChevronLeft } from "react-icons/fi";
 import { Article } from "../api/common";
 import { Button, notification } from "antd";
+import { TempOrder } from "../api/order";
+import { useMemo } from "react";
+import React from "react";
 
 function ArticlePage() {
   const { articleId } = useParams();
+  const Context = React.createContext({ name: 'Default' });
 
   // TODO : Remove this fake data
   const fakeArticle: Article = {
@@ -21,23 +25,55 @@ function ArticlePage() {
     ]
   }
 
-  const addArticle = (articleId: string) => {
-    // TODO : Create this function
-    notification["success"]({
-      message: `${fakeArticle.name} a bien été ajouté au panier`,
+  const [api, contextHolder] = notification.useNotification();
+  const contextValue = useMemo(() => ({ name: 'Ant Design' }), []);
+
+  const openSuccessNotification = (message: string) => {
+    api.success({
+      message,
     });
-  }
+  };
 
-  const setArticleQuantity = (articleId: string, articleQuantity: number) => {
-    // TODO : Create this function
-  }
-
-  const removeArticle = (articleId: string) => {
-    // TODO : Create this function
+  const addArticle = (articleId: string) => {
+    const order = localStorage.getItem("order")
+    if (order) {
+      const orderJSON: TempOrder = JSON.parse(order);
+      let isArticleInOrder = false
+      orderJSON.forEach((item, id) => {
+        if (item.articleId === articleId) {
+          isArticleInOrder = true;
+          orderJSON[id] = {
+            articleId: articleId,
+            quantity: item.quantity + 1
+          }
+        }
+      })
+      if (!isArticleInOrder) {
+        orderJSON.push(
+          {
+            articleId: articleId,
+            quantity: 1
+          }
+        )
+      }
+      localStorage.setItem("order", JSON.stringify(orderJSON))
+      openSuccessNotification(`${fakeArticle.name} a bien été ajouté au panier`)
+      return
+    }
+    const newOrder = [
+      {
+        articleId: articleId,
+        quantity: 1
+      }
+    ]
+    localStorage.setItem("order", JSON.stringify(newOrder))
+    openSuccessNotification(`${fakeArticle.name} a bien été ajouté au panier`)
+    return
   }
 
   return (
-    <>
+    <Context.Provider value={contextValue}>
+      {contextHolder}
       <div className="background-gradient-yellow-orange w-screen h-screen relative">
         <div className="flex ml-7 pt-10 justify-between">
           <FiChevronLeft
@@ -60,19 +96,19 @@ function ArticlePage() {
               {fakeArticle.description}
             </div>
             <div className="mt-14 text-2xl font-bold flex justify-end items-end w-full">
-              {fakeArticle.price}€
+              {fakeArticle.price} €
             </div>
             <Button type="primary" size="large" className="mt-7 w-full" onClick={() => {
               addArticle(fakeArticle.uid)
             }}>
               <div className="flex justify-center items-center">
-                Ajouter au panier
+                Add to cart
               </div>
             </Button>
           </div>
         </div>
       </div>
-    </>
+    </Context.Provider>
   )
 }
 
