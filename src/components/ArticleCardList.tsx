@@ -41,7 +41,7 @@ function ArticleCardList(props: Props) {
                 <div className="bg-transparent mt-1 font-bold whitespace-pre-wrap text-sm mb-2 text-black">
                   {article.name}
                 </div>
-                <div className="flex flex-col bg-white text-(--gray) rounded-r-2xl text-xs">
+                <div className="flex flex-col bg-white text-[--gray] rounded-r-2xl text-xs">
                   {truncateTextWithEllipsis(article.description)}
                 </div>
                 <div className="bg-transparent mt-auto font-bold whitespace-pre-wrap text-sm mb-2 text-black justify-end flex items-end pr-2">
