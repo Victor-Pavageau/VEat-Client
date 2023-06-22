@@ -10,15 +10,15 @@ type Props = {
 function MenuCardList(props: Props) {
   const { menuList } = props;
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const truncateTextWithEllipsis = (text: string) => {
-    const maxLenght = 75
+    const maxLenght = 60;
     if (text.length > maxLenght) {
-      return text.slice(0, maxLenght) + "..."
+      return text.slice(0, maxLenght) + "...";
     }
-    return text
-  }
+    return text;
+  };
 
   return (
     <div className="text-xs text-[--gray] mt-2">
@@ -29,7 +29,7 @@ function MenuCardList(props: Props) {
               className="bg-white mb-7 rounded-2xl flex shadow-md h-36"
               key={nanoid()}
               onClick={() => {
-                navigate(tp("/menu/:menuId", [menu.uid]))
+                navigate(tp("/menu/:menuId", [menu.uid]));
               }}
             >
               <img
@@ -53,7 +53,7 @@ function MenuCardList(props: Props) {
         })}
       </div>
     </div>
-  )
+  );
 }
 
-export default MenuCardList
+export default MenuCardList;

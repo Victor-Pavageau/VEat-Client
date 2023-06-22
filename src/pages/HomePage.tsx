@@ -15,11 +15,12 @@ type Props = {
   selectedFilterList: Tag[];
   addFilter: (filter: Tag) => void;
   removeFilter: (filter: Tag) => void;
-  userCoordinates: Coordinates | undefined
+  userCoordinates: Coordinates | undefined;
 };
 
 function HomePage(props: Props) {
-  const { selectedFilterList, addFilter, removeFilter, userCoordinates } = props;
+  const { selectedFilterList, addFilter, removeFilter, userCoordinates } =
+    props;
   // TODO : If userCoordinates !== undefined => use the getRestaurantInRadius endpoint
   const logo = transparentLogo;
 
@@ -63,26 +64,28 @@ function HomePage(props: Props) {
           addFilter={addFilter}
           removeFilter={removeFilter}
         />
-        {
-          // TODO : Check what happens if restaurantList is empty and add an error message
-          restaurantList ?
-            <RestaurantCardList restaurantList={restaurantList} />
-            :
-            <div>
-              {
-                isLoading ?
-                  <div className="bg-[--white-smoke] h-[58.5vh]">
-                    <div className="flex justify-center items-center mt-10">
-                      <Spin indicator={<LoadingOutlined spin style={{ fontSize: 40 }} />} className="text-[--orange]" />
-                    </div>
-                  </div>
-                  :
-                  <div className="bg-[--white-smoke] h-[63.5vh] flex justify-center items-center">
-                    Error : no restaurant found
-                  </div>
-              }
-            </div>
-        }
+        {restaurantList ? (
+          <RestaurantCardList restaurantList={restaurantList} />
+        ) : (
+          <div>
+            {isLoading ? (
+              <div className="bg-[--white-smoke] h-[58.5vh]">
+                <div className="flex justify-center items-center mt-10">
+                  <Spin
+                    indicator={
+                      <LoadingOutlined spin style={{ fontSize: 40 }} />
+                    }
+                    className="text-[--orange]"
+                  />
+                </div>
+              </div>
+            ) : (
+              <div className="bg-[--white-smoke] h-[63.5vh] flex justify-center items-center">
+                Error : no restaurant found
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );

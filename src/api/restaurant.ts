@@ -72,10 +72,22 @@ type GetAllRestaurantsResponse = {
   restaurants: Restaurant[];
 };
 
-type GetRestaurantsByIdResponse = {
+type GetRestaurantByIdResponse = {
   state: string;
   message: string;
   restaurant: Restaurant;
+};
+
+type GetArticleByIdResponse = {
+  state: string;
+  message: string;
+  article: Article;
+};
+
+type GetMenuByIdResponse = {
+  state: string;
+  message: string;
+  menu: Menu;
 };
 
 export const fetchAllRestaurants = async (): Promise<Restaurant[]> => {
@@ -94,7 +106,7 @@ export const fetchRestaurantById = async (
   restaurantId: string
 ): Promise<Restaurant> => {
   return await axios
-    .request<GetRestaurantsByIdResponse>({
+    .request<GetRestaurantByIdResponse>({
       method: "GET",
       url: `${baseUrl}/restaurants/${restaurantId}`,
       headers: {
@@ -104,8 +116,37 @@ export const fetchRestaurantById = async (
     .then((result) => result.data.restaurant);
 };
 
+export const fetchArticleById = async (
+  articleId: string
+): Promise<Article> => {
+  return await axios
+    .request<GetArticleByIdResponse>({
+      method: "GET",
+      url: `${baseUrl}/restaurants/article/${articleId}`,
+      headers: {
+        Authorization: getJWT(),
+      },
+    })
+    .then((result) => result.data.article);
+};
+
+export const fetchMenuById = async (
+  menuId: string
+): Promise<Menu> => {
+  return await axios
+    .request<GetMenuByIdResponse>({
+      method: "GET",
+      url: `${baseUrl}/restaurants/menu/${menuId}`,
+      headers: {
+        Authorization: getJWT(),
+      },
+    })
+    .then((result) => result.data.menu);
+};
+
 // TODO : Remove this fake data
 export const fakeRestaurantCoordinates = {
   longitude: "-0.5737083643779027",
   latitude: "44.84337342828982",
 };
+
