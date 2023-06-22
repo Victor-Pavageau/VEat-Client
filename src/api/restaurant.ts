@@ -1,12 +1,12 @@
-import { Article, Menu } from "./common";
 import axios from "axios";
+import { Tag } from "./common";
 
 const baseUrl = `http://${process.env.REACT_APP_REVERSE_PROXY}/restaurant`;
 
 const getJWT = () => {
-  const JWT = localStorage.getItem("JWT")
+  const JWT = localStorage.getItem("JWT");
   if (!JWT) {
-    return "Bearer"
+    return "Bearer";
   }
   // const item = JSON.parse(itemStr)
   // const now = new Date()
@@ -14,8 +14,32 @@ const getJWT = () => {
   // 	localStorage.removeItem(key)
   // 	return null
   // }
-  return "Bearer " + JWT
-}
+  return "Bearer " + JWT;
+};
+
+export type Article = {
+  uid: string;
+  name: string;
+  isUnavailable: boolean;
+  photo: string;
+  description: string;
+  price: number | undefined;
+  category: string;
+  tags: Tag[];
+};
+
+export type Menu = {
+  uid: string;
+  isUnavailable: boolean;
+  name: string;
+  photo: string;
+  description: string;
+  price: number;
+  articles: {
+    articleId: string;
+    quantity: number;
+  }[];
+};
 
 export type Restaurant = {
   uid: string;
@@ -55,13 +79,14 @@ type GetRestaurantsByIdResponse = {
 };
 
 export const fetchAllRestaurants = async (): Promise<Restaurant[]> => {
-  return await axios.request<GetAllRestaurantsResponse>({
-    method: "GET",
-    url: `${baseUrl}/restaurants`,
-    headers: {
-      Authorization: getJWT()
-    }
-  })
+  return await axios
+    .request<GetAllRestaurantsResponse>({
+      method: "GET",
+      url: `${baseUrl}/restaurants`,
+      headers: {
+        Authorization: getJWT(),
+      },
+    })
     .then((result) => result.data.restaurants);
 };
 
@@ -70,14 +95,12 @@ export const fetchRestaurantById = async (
 ): Promise<Restaurant> => {
   return await axios
     .request<GetRestaurantsByIdResponse>({
-
       method: "GET",
       url: `${baseUrl}/restaurants/${restaurantId}`,
       headers: {
-        Authorization: getJWT()
-      }
-    }
-    )
+        Authorization: getJWT(),
+      },
+    })
     .then((result) => result.data.restaurant);
 };
 

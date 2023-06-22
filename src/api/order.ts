@@ -1,5 +1,3 @@
-import { Article, Menu } from "./common";
-
 export type Order = {
   uid: string;
   addresses: {
@@ -31,17 +29,11 @@ export type Order = {
     orderTimestamp: string;
     deliveryTimestamp: string;
   };
-  orderDetails: [
-    {
-      item: Article | Menu;
-      quantity: number;
-    }
-  ];
+  orderDetails: LocalOrder[];
 };
 
-export type TempOrder = [
-  {
-    articleId: string;
-    quantity: number;
-  }
-];
+export type LocalOrder = {
+  itemType: "menu" | "article";
+  itemId: string;
+  quantity: number;
+};

@@ -1,11 +1,11 @@
 import { useParams } from "react-router-dom";
 import "./ArticlePage.css";
 import { FiChevronLeft } from "react-icons/fi";
-import { Article } from "../api/common";
 import { Button, notification } from "antd";
-import { TempOrder } from "../api/order";
+import { LocalOrder } from "../api/order";
 import { useMemo } from "react";
 import React from "react";
+import { Article } from "../api/restaurant";
 
 function ArticlePage() {
   const { articleId } = useParams();
@@ -26,7 +26,7 @@ function ArticlePage() {
   }
 
   const [api, contextHolder] = notification.useNotification();
-  const contextValue = useMemo(() => ({ name: 'Ant Design' }), []);
+  const contextValue = useMemo(() => ({ name: 'Notification' }), []);
 
   const openSuccessNotification = (message: string) => {
     api.success({
@@ -37,13 +37,14 @@ function ArticlePage() {
   const addArticle = (articleId: string) => {
     const order = localStorage.getItem("order")
     if (order) {
-      const orderJSON: TempOrder = JSON.parse(order);
+      const orderJSON: LocalOrder[] = JSON.parse(order);
       let isArticleInOrder = false
       orderJSON.forEach((item, id) => {
-        if (item.articleId === articleId) {
+        if (item.itemId === articleId) {
           isArticleInOrder = true;
           orderJSON[id] = {
-            articleId: articleId,
+            itemType: "article",
+            itemId: articleId,
             quantity: item.quantity + 1
           }
         }
@@ -51,7 +52,8 @@ function ArticlePage() {
       if (!isArticleInOrder) {
         orderJSON.push(
           {
-            articleId: articleId,
+            itemType: "article",
+            itemId: articleId,
             quantity: 1
           }
         )
@@ -60,9 +62,10 @@ function ArticlePage() {
       openSuccessNotification(`${fakeArticle.name} a bien été ajouté au panier`)
       return
     }
-    const newOrder = [
+    const newOrder: LocalOrder[] = [
       {
-        articleId: articleId,
+        itemType: "article",
+        itemId: articleId,
         quantity: 1
       }
     ]
@@ -98,7 +101,7 @@ function ArticlePage() {
             <div className="mt-14 text-2xl font-bold flex justify-end items-end w-full">
               {fakeArticle.price} €
             </div>
-            <Button type="primary" size="large" className="mt-7 w-full" onClick={() => {
+            <Button type="primary" size="large" className="mt-7 w-full mb-3" onClick={() => {
               addArticle(fakeArticle.uid)
             }}>
               <div className="flex justify-center items-center">

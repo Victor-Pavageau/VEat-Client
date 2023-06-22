@@ -24,24 +24,3 @@ export const tags = [
 ] as const;
 
 export type Tag = (typeof tags)[number];
-
-export type Article = {
-  uid: string;
-  name: string;
-  isUnavailable: boolean;
-  photo: string;
-  description: string;
-  price: number | undefined;
-  category: string; // Entrée, Plats, Desserts, Boissons, ...
-  tags: Tag[];
-};
-
-export type Menu = {
-  uid: string;
-  isUnavailable: boolean;
-  name: string;
-  photo: string;
-  description: string;
-  price: number;
-  articles: Article[];
-};

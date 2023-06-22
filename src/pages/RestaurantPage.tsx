@@ -42,9 +42,12 @@ function RestaurantPage() {
             </>
           }
           {
+            restaurant.menus && restaurant.menus.length > 0 && restaurant.articles && restaurant.articles.length > 0 &&
+            <hr className="mb-3 bg-[--orange] h-0.5 border-0" />
+          }
+          {
             restaurant.articles && restaurant.articles.length > 0 &&
             <>
-              <hr className="mb-3 bg-[--orange] h-0.5 border-0" />
               <h2>
                 Articles :
               </h2>

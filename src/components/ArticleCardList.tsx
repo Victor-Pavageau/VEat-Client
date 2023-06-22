@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
-import { Article } from "../api/common";
 import { useNavigate } from "react-router-dom";
 import { tp } from "../routing";
+import { Article } from "../api/restaurant";
 
 type Props = {
   articleList: Article[];

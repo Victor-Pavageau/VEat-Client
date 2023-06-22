@@ -1,7 +1,7 @@
 import { nanoid } from "nanoid";
-import { Menu } from "../api/common";
 import { tp } from "../routing";
 import { useNavigate } from "react-router-dom";
+import { Menu } from "../api/restaurant";
 
 type Props = {
   menuList: Menu[];
