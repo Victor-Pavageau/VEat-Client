@@ -23,7 +23,7 @@ export type Article = {
   isUnavailable: boolean;
   photo: string;
   description: string;
-  price: number | undefined;
+  price: number;
   category: string;
   tags: Tag[];
 };

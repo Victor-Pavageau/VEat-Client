@@ -2,7 +2,7 @@ import transparentLogo from "../assets/transparent_logo.png";
 import RestaurantCardList from "../components/RestaurantCardList";
 import ShortcutFilterList from "../components/ShortcutFilterList";
 import { Tag } from "../api/common";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RestaurantSearchBar from "../components/RestaurantSearchBar";
 import NavBar from "../components/NavBar";
 import { Modal, Spin } from "antd";
@@ -27,6 +27,10 @@ function HomePage(props: Props) {
   const [filterModalIsOpen, setFilterModalIsOpen] = useState(false);
   const [restaurantRadius, setRestaurantRadius] = useState("2");
   const { data: restaurantList, isLoading } = useGetAllRestaurants();
+
+  useEffect(() => {
+    // TODO : Modal warning message current order in another restaurant will be deleted if you select a different restaurant !!!
+  }, []);
 
   return (
     <div className="bg-[--white-smoke]">

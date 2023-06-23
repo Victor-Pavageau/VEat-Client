@@ -5,9 +5,10 @@ import { Button, Collapse, notification, Spin } from "antd";
 import React, { useMemo } from "react";
 import { LocalOrder } from "../api/order";
 import { nanoid } from "nanoid";
-import { useGetMenuById } from "../hooks/restaurants/useGetMenuById";
+import { useGetMenuById } from "../hooks/useGetMenuById";
 import { tp } from "../routing";
 import { LoadingOutlined } from "@ant-design/icons";
+import { Menu } from "../api/restaurant";
 
 function MenuPage() {
   const { menuId } = useParams();
@@ -24,17 +25,20 @@ function MenuPage() {
     });
   };
 
-  const addMenu = (menuId: string) => {
+  const addMenu = (menu: Menu) => {
     const order = localStorage.getItem("order");
     if (order) {
       const orderJSON: LocalOrder[] = JSON.parse(order);
       let isMenuInOrder = false;
       orderJSON.forEach((item, id) => {
-        if (item.itemId === menuId) {
+        if (item.itemId === menu.uid) {
           isMenuInOrder = true;
           orderJSON[id] = {
             itemType: "menu",
-            itemId: menuId,
+            description: menu.description,
+            itemName: menu.name,
+            price: menu.price,
+            itemId: menu.uid,
             quantity: item.quantity + 1,
           };
         }
@@ -42,7 +46,10 @@ function MenuPage() {
       if (!isMenuInOrder) {
         orderJSON.push({
           itemType: "menu",
-          itemId: menuId,
+          description: menu.description,
+          itemName: menu.name,
+          price: menu.price,
+          itemId: menu.uid,
           quantity: 1,
         });
       }
@@ -53,7 +60,10 @@ function MenuPage() {
     const newOrder: LocalOrder[] = [
       {
         itemType: "menu",
-        itemId: menuId,
+        itemId: menu.uid,
+        description: menu.description,
+        itemName: menu.name,
+        price: menu.price,
         quantity: 1,
       },
     ];
@@ -127,7 +137,7 @@ function MenuPage() {
                   size="large"
                   className="mt-7 w-full mb-3"
                   onClick={() => {
-                    addMenu(menu.uid);
+                    addMenu(menu);
                   }}
                 >
                   <div className="flex justify-center items-center">

@@ -34,6 +34,9 @@ export type Order = {
 
 export type LocalOrder = {
   itemType: "menu" | "article";
+  itemName: string;
+  price: number;
+  description: string;
   itemId: string;
   quantity: number;
 };

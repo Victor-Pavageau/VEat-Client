@@ -8,6 +8,7 @@ import React from "react";
 import { useGetArticleById } from "../hooks/useGetArticleById";
 import { tp } from "../routing";
 import { LoadingOutlined } from "@ant-design/icons";
+import { Article } from "../api/restaurant";
 
 function ArticlePage() {
   const { articleId } = useParams();
@@ -24,17 +25,20 @@ function ArticlePage() {
     });
   };
 
-  const addArticle = (articleId: string) => {
+  const addArticle = (article: Article) => {
     const order = localStorage.getItem("order");
     if (order) {
       const orderJSON: LocalOrder[] = JSON.parse(order);
       let isArticleInOrder = false;
       orderJSON.forEach((item, id) => {
-        if (item.itemId === articleId) {
+        if (item.itemId === article.uid) {
           isArticleInOrder = true;
           orderJSON[id] = {
             itemType: "article",
-            itemId: articleId,
+            itemId: article.uid,
+            description: article.description,
+            itemName: article.name,
+            price: article.price,
             quantity: item.quantity + 1,
           };
         }
@@ -42,7 +46,10 @@ function ArticlePage() {
       if (!isArticleInOrder) {
         orderJSON.push({
           itemType: "article",
-          itemId: articleId,
+          description: article.description,
+          itemName: article.name,
+          price: article.price,
+          itemId: article.uid,
           quantity: 1,
         });
       }
@@ -53,7 +60,10 @@ function ArticlePage() {
     const newOrder: LocalOrder[] = [
       {
         itemType: "article",
-        itemId: articleId,
+        description: article.description,
+        itemName: article.name,
+        price: article.price,
+        itemId: article.uid,
         quantity: 1,
       },
     ];
@@ -110,7 +120,7 @@ function ArticlePage() {
                     size="large"
                     className="mt-7 w-full mb-3"
                     onClick={() => {
-                      addArticle(article.uid);
+                      addArticle(article);
                     }}
                   >
                     <div className="flex justify-center items-center">
