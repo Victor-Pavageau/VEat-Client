@@ -28,15 +28,10 @@ function HomePage(props: Props) {
   const [restaurantRadius, setRestaurantRadius] = useState("2");
   const { data: restaurantList, isLoading } = useGetAllRestaurants();
 
-  useEffect(() => {
-    // TODO : Modal warning message current order in another restaurant will be deleted if you select a different restaurant !!!
-  }, []);
-
   return (
     <div className="bg-[--white-smoke]">
       <Modal
         open={filterModalIsOpen}
-        className="wrapClassName"
         centered
         onCancel={() => setFilterModalIsOpen(false)}
         footer={null}

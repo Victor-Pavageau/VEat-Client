@@ -30,15 +30,16 @@ function FilterModal(props: Props) {
         Find in a
         <Select
           defaultValue={restaurantRadius}
-          className="w-20"
+          className="w-24"
           onChange={changeRadius}
           options={[
             { value: "2", label: "2km" },
             { value: "5", label: "5km" },
             { value: "10", label: "10km" },
             { value: "20", label: "20km" },
+            { value: "50", label: "50km" },
           ]}
-        />{" "}
+        />
         radius
       </div>
       <div className="flex flex-col gap-3 overflow-y-auto h-80">
