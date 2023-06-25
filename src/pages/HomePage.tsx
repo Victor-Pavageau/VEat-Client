@@ -2,7 +2,7 @@ import transparentLogo from "../assets/transparent_logo.png";
 import RestaurantCardList from "../components/RestaurantCardList";
 import ShortcutFilterList from "../components/ShortcutFilterList";
 import { Tag } from "../api/common";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import RestaurantSearchBar from "../components/RestaurantSearchBar";
 import NavBar from "../components/NavBar";
 import { Modal, Spin } from "antd";
@@ -79,8 +79,8 @@ function HomePage(props: Props) {
                 </div>
               </div>
             ) : (
-              <div className="bg-[--white-smoke] h-[63.5vh] flex justify-center items-center">
-                Error : no restaurant found
+              <div className="bg-[--white-smoke] h-[63.5vh] flex justify-center items-center text-[--gray]">
+                No restaurant found
               </div>
             )}
           </div>

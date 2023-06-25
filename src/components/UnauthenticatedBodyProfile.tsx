@@ -1,16 +1,41 @@
-import { Button, Input } from "antd";
+import { Button, Input, notification } from "antd";
+import React from "react";
+import { useEffect, useMemo, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { useNavigate } from "react-router";
+import { LogIn, logInUser } from "../api/user";
 import { tp } from "../routing";
 
 type Props = {
-  setAuthenticatedUser: (isAuthenticated: boolean) => void;
+  setJWToken: (token: string) => void;
 };
 
 function UnauthenticatedBodyProfile(props: Props) {
-  const { setAuthenticatedUser } = props;
+  const { setJWToken } = props;
 
   const navigate = useNavigate();
+  const [email, setEmail] = useState<string>();
+  const [password, setPassword] = useState<string>();
+  const [logInInformations, setLogInInformations] = useState<LogIn>({});
+  const Context = React.createContext({ name: "Default" });
+  const [api, contextHolder] = notification.useNotification();
+  const contextValue = useMemo(() => ({ name: "Notification" }), []);
+
+  useEffect(() => {
+    if (logInInformations.token) {
+      setJWToken(logInInformations.token);
+    }
+    if (logInInformations.message) {
+      openErrorNotification(logInInformations.message);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [logInInformations]);
+
+  const openErrorNotification = (message: string) => {
+    api.error({
+      message,
+    });
+  };
 
   return (
     <>
@@ -21,6 +46,9 @@ function UnauthenticatedBodyProfile(props: Props) {
           className="bg-[--light-gray] hover:bg-[--light-gray] focus:bg-[--light-gray]"
           bordered={false}
           placeholder="example.mail@domain.com"
+          onChange={(value) => {
+            setEmail(value.target.value);
+          }}
         />
       </div>
       <div className="flex flex-col px-12 pt-7 text-[--gray] gap-y-2">
@@ -31,6 +59,9 @@ function UnauthenticatedBodyProfile(props: Props) {
           bordered={false}
           placeholder="*********"
           type="password"
+          onChange={(value) => {
+            setPassword(value.target.value);
+          }}
         />
         <div className="text-xs mt-1 flex justify-end">
           <div
@@ -44,16 +75,21 @@ function UnauthenticatedBodyProfile(props: Props) {
         </div>
       </div>
       <div className="flex flex-col px-12 justify-center items-center">
-        <Button
-          className="flex justify-center items-center w-min mt-12"
-          type="primary"
-          size="large"
-          onClick={() => {
-            setAuthenticatedUser(true);
-          }}
-        >
-          <div className="flex justify-center items-center mx-2">Log in</div>
-        </Button>
+        <Context.Provider value={contextValue}>
+          {contextHolder}
+          <Button
+            className="flex justify-center items-center w-min mt-12"
+            type="primary"
+            size="large"
+            onClick={async () => {
+              if (email && password) {
+                setLogInInformations(await logInUser(email, password));
+              }
+            }}
+          >
+            <div className="flex justify-center items-center mx-2">Log in</div>
+          </Button>
+        </Context.Provider>
         <Button
           className="flex justify-center items-center w-min mt-7 border-2"
           type="primary"

@@ -22,6 +22,9 @@ function MenuPage() {
   const openSuccessNotification = (message: string) => {
     api.success({
       message,
+      onClick: () => {
+        navigate(tp("/cart"));
+      },
     });
   };
 

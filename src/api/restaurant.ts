@@ -1,21 +1,7 @@
 import axios from "axios";
-import { Tag } from "./common";
+import { getJWT, Tag } from "./common";
 
 const baseUrl = `http://${process.env.REACT_APP_REVERSE_PROXY}/restaurant`;
-
-const getJWT = () => {
-  const JWT = localStorage.getItem("JWT");
-  if (!JWT) {
-    return "Bearer";
-  }
-  // const item = JSON.parse(itemStr)
-  // const now = new Date()
-  // if (now.getTime() > item.expiry) {
-  // 	localStorage.removeItem(key)
-  // 	return null
-  // }
-  return "Bearer " + JWT;
-};
 
 export type Article = {
   uid: string;

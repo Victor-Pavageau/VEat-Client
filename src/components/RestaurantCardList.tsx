@@ -122,8 +122,9 @@ function RestaurantCardList(props: Props) {
       </div>
     </>
   ) : (
-    // TODO : Add a clean error message here
-    <div>Error</div>
+    <div className="text-[--gray] flex justify-center items-center">
+      No restaurant found near you
+    </div>
   );
 }
 
