@@ -2,7 +2,7 @@ import transparentLogo from "../assets/transparent_logo.png";
 import RestaurantCardList from "../components/RestaurantCardList";
 import ShortcutFilterList from "../components/ShortcutFilterList";
 import { Tag } from "../api/common";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RestaurantSearchBar from "../components/RestaurantSearchBar";
 import NavBar from "../components/NavBar";
 import { Modal, Spin } from "antd";
@@ -10,6 +10,7 @@ import FilterModal from "../components/FilterModal";
 import { useGetAllRestaurants } from "../hooks/restaurants/useGetAllRestaurants";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Coordinates } from "../api/user";
+import { Restaurant } from "../api/restaurant";
 
 type Props = {
   selectedFilterList: Tag[];
@@ -27,6 +28,35 @@ function HomePage(props: Props) {
   const [filterModalIsOpen, setFilterModalIsOpen] = useState(false);
   const [restaurantRadius, setRestaurantRadius] = useState("2");
   const { data: restaurantList, isLoading } = useGetAllRestaurants();
+  const [restaurantSearchName, setRestaurantSearchName] = useState<string>("");
+  const [filteredRestaurantList, setFilteredRestaurantList] =
+    useState(restaurantList);
+
+  const filterRestaurantList = () => {
+    const restaurantListFiltered: Restaurant[] = [];
+    restaurantList?.forEach((restaurant) => {
+      let restaurantIncludeAllSelectedTags = true;
+      selectedFilterList.forEach((tag) => {
+        if (!restaurant.tags?.includes(tag)) {
+          restaurantIncludeAllSelectedTags = false;
+        }
+      });
+      if (
+        restaurantIncludeAllSelectedTags &&
+        restaurant.restaurantName
+          .toLocaleLowerCase()
+          .includes(restaurantSearchName.toLocaleLowerCase())
+      ) {
+        restaurantListFiltered.push(restaurant);
+      }
+    });
+    return restaurantListFiltered;
+  };
+
+  useEffect(() => {
+    setFilteredRestaurantList(filterRestaurantList());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [restaurantList, restaurantSearchName, selectedFilterList]);
 
   return (
     <div className="bg-[--white-smoke]">
@@ -57,14 +87,17 @@ function HomePage(props: Props) {
             around you
           </h3>
         </div>
-        <RestaurantSearchBar setFilterModalIsOpen={setFilterModalIsOpen} />
+        <RestaurantSearchBar
+          setFilterModalIsOpen={setFilterModalIsOpen}
+          setRestaurantSearchName={setRestaurantSearchName}
+        />
         <ShortcutFilterList
           selectedFilterList={selectedFilterList}
           addFilter={addFilter}
           removeFilter={removeFilter}
         />
-        {restaurantList ? (
-          <RestaurantCardList restaurantList={restaurantList} />
+        {filteredRestaurantList ? (
+          <RestaurantCardList restaurantList={filteredRestaurantList} />
         ) : (
           <div>
             {isLoading ? (
