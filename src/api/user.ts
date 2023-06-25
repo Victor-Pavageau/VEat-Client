@@ -19,8 +19,8 @@ export type User = {
     surname: string;
   };
   address: {
-    longitude: string;
-    latitude: string;
+    longitude?: string;
+    latitude?: string;
     fullAddress: string;
   };
   phoneNumber: string;

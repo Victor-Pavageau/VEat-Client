@@ -49,23 +49,24 @@ const replacePlaceholders = (url: Path, replaceArray: string[]): string => {
 
 function RouteHandler(): JSX.Element {
   const [selectedFilterList, setSelectedFilterList] = useState<Tag[]>([]);
-  const [userCoordinates, setUserCoordinates] = useState<Coordinates | undefined>()
+  const [userCoordinates, setUserCoordinates] = useState<
+    Coordinates | undefined
+  >();
 
   const getLocation = () => {
-    navigator.geolocation.getCurrentPosition((position: GeolocationPosition) => {
-      setUserCoordinates(
-        {
+    navigator.geolocation.getCurrentPosition(
+      (position: GeolocationPosition) => {
+        setUserCoordinates({
           latitude: position.coords.latitude,
           longitude: position.coords.longitude,
-        }
-      )
-    });
+        });
+      }
+    );
   };
 
-
   useEffect(() => {
-    getLocation()
-  }, [])
+    getLocation();
+  }, []);
 
   const addFilter = (filter: Tag) => {
     setSelectedFilterList([...selectedFilterList, filter]);
@@ -78,20 +79,34 @@ function RouteHandler(): JSX.Element {
 
   return (
     <Routes>
-      <Route path={tp("/")} element={<HomePage addFilter={addFilter} removeFilter={removeFilter} selectedFilterList={selectedFilterList} userCoordinates={userCoordinates} />} />
-      <Route path={tp("/map")} element={<MapPage addFilter={addFilter} removeFilter={removeFilter} selectedFilterList={selectedFilterList} userCoordinates={userCoordinates} />} />
+      <Route
+        path={tp("/")}
+        element={
+          <HomePage
+            addFilter={addFilter}
+            removeFilter={removeFilter}
+            selectedFilterList={selectedFilterList}
+            userCoordinates={userCoordinates}
+          />
+        }
+      />
+      <Route
+        path={tp("/map")}
+        element={
+          <MapPage
+            addFilter={addFilter}
+            removeFilter={removeFilter}
+            selectedFilterList={selectedFilterList}
+            userCoordinates={userCoordinates}
+          />
+        }
+      />
       <Route
         path={tp("/restaurant/:restaurantId")}
         element={<RestaurantPage />}
       />
-      <Route
-        path={tp("/article/:articleId")}
-        element={<ArticlePage />}
-      />
-      <Route
-        path={tp("/menu/:menuId")}
-        element={<MenuPage />}
-      />
+      <Route path={tp("/article/:articleId")} element={<ArticlePage />} />
+      <Route path={tp("/menu/:menuId")} element={<MenuPage />} />
       <Route path={tp("/cart")} element={<CartPage />} />
       <Route path={tp("/profile")} element={<ProfilePage />} />
       <Route path={tp("/profile/create-account")} element={<CreateAccount />} />

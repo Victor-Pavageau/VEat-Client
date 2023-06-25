@@ -1,8 +1,24 @@
+import { useEffect, useState } from "react";
 import { FiChevronLeft } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
+import { getUserIdFromJWT } from "../api/common";
 import ForgotPasswordBody from "../components/ForgotPasswordBody";
 import ForgotPasswordHeader from "../components/ForgotPasswordHeader";
+import { useGetUserById } from "../hooks/useGetUserById";
+import { tp } from "../routing";
 
 function ForgotPassword() {
+  const [userId] = useState<string | undefined>(getUserIdFromJWT());
+  const { data: user } = useGetUserById(userId!);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (user === undefined) {
+      navigate(tp("/profile"));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <div className="background-gradient-yellow-orange w-screen h-screen relative">
       <div className="flex ml-7 pt-10">
