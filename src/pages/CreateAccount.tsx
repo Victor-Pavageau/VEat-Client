@@ -4,16 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { getUserIdFromJWT } from "../api/common";
 import CreateAccountBody from "../components/CreateAccountBody";
 import CreateAccountHeader from "../components/CreateAccountHeader";
-import { useGetUserById } from "../hooks/useGetUserById";
 import { tp } from "../routing";
 
 function CreateAccount() {
   const [userId] = useState<string | undefined>(getUserIdFromJWT());
-  const { data: user } = useGetUserById(userId!);
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user === undefined) {
+    if (userId !== undefined) {
       navigate(tp("/profile"));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

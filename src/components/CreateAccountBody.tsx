@@ -1,9 +1,9 @@
 import { Button, Form, Input } from "antd";
+import { createUser, CreateUser } from "../api/user";
 
 function CreateAccountBody() {
-  const onFinish = (values: any) => {
-    // TODO : Link this with the API
-    console.log("Success:", values);
+  const onFinish = async (values: CreateUser) => {
+    await createUser(values);
   };
 
   return (

@@ -30,6 +30,18 @@ export type User = {
   hasRefered?: string[];
 };
 
+export type CreateUser = {
+  type: userType;
+  username: {
+    name: string;
+    surname: string;
+  };
+  password: string;
+  address: string;
+  phoneNumber: string;
+  email: string;
+};
+
 export type Coordinates = {
   latitude: number;
   longitude: number;
@@ -40,7 +52,7 @@ export type LogIn = {
   token?: string;
 }
 
-type GetUserByIdResponse = {
+type GetUserResponse = {
   state: string;
   message: string;
   user: User;
@@ -81,12 +93,27 @@ export const getUserById = async (
   userId: string
 ): Promise<User> => {
   return await axios
-    .request<GetUserByIdResponse>({
+    .request<GetUserResponse>({
       method: "GET",
       url: `${baseUrl}/user/users/${userId}`,
       headers: {
         Authorization: getJWT(),
       },
+    })
+    .then((result) => result.data.user);
+};
+
+export const createUser = async (
+  user: CreateUser
+): Promise<User> => {
+  return await axios
+    .request<GetUserResponse>({
+      method: "POST",
+      url: `${baseUrl}/user/users`,
+      headers: {
+        Authorization: getJWT(),
+      },
+      data: user
     })
     .then((result) => result.data.user);
 };

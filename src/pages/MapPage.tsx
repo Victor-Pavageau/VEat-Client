@@ -1,18 +1,23 @@
 import NavBar from "../components/NavBar";
 import ShortcutFilterList from "../components/ShortcutFilterList";
-import { Tag } from "../api/common";
+import { getUserIdFromJWT, Tag } from "../api/common";
 import TrackOrderMap from "../components/TrackOrderMap";
 import { Coordinates } from "../api/user";
+import { useState } from "react";
+import { useGetUserById } from "../hooks/useGetUserById";
 
 type Props = {
   selectedFilterList: Tag[];
   addFilter: (filter: Tag) => void;
   removeFilter: (filter: Tag) => void;
-  userCoordinates: Coordinates | undefined
+  userCoordinates: Coordinates | undefined;
 };
 
 function MapPage(props: Props) {
-  const { selectedFilterList, addFilter, removeFilter, userCoordinates } = props;
+  const { selectedFilterList, addFilter, removeFilter, userCoordinates } =
+    props;
+  const [userId] = useState<string | undefined>(getUserIdFromJWT());
+  const { data: user } = useGetUserById(userId!);
 
   return (
     <>
@@ -32,9 +37,7 @@ function MapPage(props: Props) {
             }
             <TrackOrderMap userCoordinates={userCoordinates} />
           </div>
-          <div className="mt-3">
-            Restaurant informations
-          </div>
+          <div className="mt-3">Restaurant informations</div>
         </div>
       </div>
     </>
