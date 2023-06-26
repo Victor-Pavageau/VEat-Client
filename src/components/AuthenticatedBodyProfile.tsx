@@ -1,9 +1,8 @@
 import { Button, Form, Input } from "antd";
 import { AiFillEdit, AiOutlineDelete } from "react-icons/ai";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetUserById } from "../hooks/useGetUserById";
 import { logOutUser, UpdateUser, updateUser } from "../api/user";
-import { useQueryClient } from "@tanstack/react-query";
 
 type Props = {
   userId?: string;
@@ -16,18 +15,12 @@ function AuthenticatedBodyProfile(props: Props) {
 
   const [form] = Form.useForm();
 
-  const queryClient = useQueryClient();
   const { data: user } = useGetUserById(userId!);
   const [isNameDisabled, setIsNameDisabled] = useState(true);
   const [isSurameDisabled, setIsSurameDisabled] = useState(true);
   const [isAddressDisabled, setIsAddressDisabled] = useState(true);
   const [isPhoneDisabled, setIsPhoneDisabled] = useState(true);
   const [isPasswordDisabled, setIsPasswordDisabled] = useState(true);
-
-  useEffect(() => {
-    queryClient.invalidateQueries({ queryKey: ["get-user"] });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const onFinish = async (values: any) => {
     if (userId) {
@@ -53,9 +46,9 @@ function AuthenticatedBodyProfile(props: Props) {
   }, [user]);
 
   return (
-    <>
+    <Form onFinish={onFinish} form={form}>
       {user ? (
-        <Form onFinish={onFinish} form={form}>
+        <>
           <div className="flex flex-col px-12 pt-8 text-[--gray] gap-y-2">
             <div className="flex gap-3">
               <div className="flex flex-col gap-1">
@@ -230,11 +223,11 @@ function AuthenticatedBodyProfile(props: Props) {
               </div>
             </Button>
           </div>
-        </Form>
+        </>
       ) : (
-        <div></div>
+        <div />
       )}
-    </>
+    </Form>
   );
 }
 
