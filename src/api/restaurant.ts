@@ -129,10 +129,3 @@ export const fetchMenuById = async (
     })
     .then((result) => result.data.menu);
 };
-
-// TODO : Remove this fake data
-export const fakeRestaurantCoordinates = {
-  longitude: "-0.5737083643779027",
-  latitude: "44.84337342828982",
-};
-
