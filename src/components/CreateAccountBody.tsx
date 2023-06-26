@@ -1,7 +1,11 @@
 import { Button, Form, Input } from "antd";
+import { useNavigate } from "react-router-dom";
 import { createUser, CreateUser } from "../api/user";
+import { tp } from "../routing";
 
 function CreateAccountBody() {
+  const navigate = useNavigate();
+
   const onFinish = async (values: any) => {
     const newUser: CreateUser = {
       address: values.address,
@@ -15,6 +19,7 @@ function CreateAccountBody() {
       type: "Client",
     };
     await createUser(newUser);
+    navigate(tp("/profile"));
   };
 
   return (

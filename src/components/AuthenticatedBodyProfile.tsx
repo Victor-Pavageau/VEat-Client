@@ -2,7 +2,7 @@ import { Button, Form, Input } from "antd";
 import { AiFillEdit, AiOutlineDelete } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import { useGetUserById } from "../hooks/useGetUserById";
-import { logOutUser, UpdateUser, updateUser } from "../api/user";
+import { deleteUser, logOutUser, UpdateUser, updateUser } from "../api/user";
 
 type Props = {
   userId?: string;
@@ -217,6 +217,11 @@ function AuthenticatedBodyProfile(props: Props) {
               danger
               type="primary"
               size="large"
+              onClick={async () => {
+                await deleteUser(user.uid);
+                setAuthenticatedUser(false);
+                localStorage.removeItem("JWT");
+              }}
             >
               <div className="flex justify-center items-center mx-2 gap-3">
                 <AiOutlineDelete size={20} /> Delete my account
