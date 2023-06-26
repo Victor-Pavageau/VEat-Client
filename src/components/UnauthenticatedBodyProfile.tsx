@@ -32,8 +32,15 @@ function UnauthenticatedBodyProfile(props: Props) {
   }, [logInInformations]);
 
   const openErrorNotification = (message: string) => {
+    let errorMessage = message;
+    if (message === "Failed to login") {
+      errorMessage = "Unknown user";
+    }
+    if (message === "Invalid credentials") {
+      errorMessage = "Wrong password";
+    }
     api.error({
-      message,
+      message: errorMessage,
     });
   };
 

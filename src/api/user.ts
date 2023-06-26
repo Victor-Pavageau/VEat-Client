@@ -128,6 +128,19 @@ export const createUser = async (
     .then((result) => result.data.user);
 };
 
+export const deleteUser = async (
+  userId: string
+) => {
+  return await axios
+    .request({
+      method: "DELETE",
+      url: `${baseUrl}/user/users/${userId}`,
+      headers: {
+        Authorization: getJWT(),
+      },
+    })
+};
+
 export const updateUser = async (
   userId: string, user: UpdateUser
 ): Promise<User> => {
