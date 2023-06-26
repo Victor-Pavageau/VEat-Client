@@ -42,6 +42,16 @@ export type CreateUser = {
   email: string;
 };
 
+export type UpdateUser = {
+  type: userType;
+  username: {
+    name: string;
+    surname: string;
+  };
+  address: string;
+  phoneNumber: string;
+};
+
 export type Coordinates = {
   latitude: number;
   longitude: number;
@@ -110,6 +120,21 @@ export const createUser = async (
     .request<GetUserResponse>({
       method: "POST",
       url: `${baseUrl}/user/users`,
+      headers: {
+        Authorization: getJWT(),
+      },
+      data: user
+    })
+    .then((result) => result.data.user);
+};
+
+export const updateUser = async (
+  userId: string, user: UpdateUser
+): Promise<User> => {
+  return await axios
+    .request<GetUserResponse>({
+      method: "PUT",
+      url: `${baseUrl}/user/users/${userId}`,
       headers: {
         Authorization: getJWT(),
       },

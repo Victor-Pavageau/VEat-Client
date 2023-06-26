@@ -2,8 +2,19 @@ import { Button, Form, Input } from "antd";
 import { createUser, CreateUser } from "../api/user";
 
 function CreateAccountBody() {
-  const onFinish = async (values: CreateUser) => {
-    await createUser(values);
+  const onFinish = async (values: any) => {
+    const newUser: CreateUser = {
+      address: values.address,
+      email: values.email,
+      password: values.password,
+      phoneNumber: values.phone,
+      username: {
+        name: values.name,
+        surname: values.surname,
+      },
+      type: "Client",
+    };
+    await createUser(newUser);
   };
 
   return (
@@ -32,6 +43,20 @@ function CreateAccountBody() {
               />
             </Form.Item>
           </div>
+        </div>
+      </div>
+      <div className="flex flex-col px-12 pt-1 text-[--gray] gap-y-2">
+        <div className="flex flex-col gap-1">
+          Password
+          <Form.Item required name={"password"}>
+            <Input
+              className="bg-[--light-gray] hover:bg-[--light-gray] focus:bg-[--light-gray]"
+              bordered={false}
+              required
+              type="password"
+              size="large"
+            />
+          </Form.Item>
         </div>
       </div>
       <div className="flex flex-col px-12 pt-1 text-[--gray] gap-y-2">

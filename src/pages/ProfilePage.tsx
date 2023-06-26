@@ -6,11 +6,13 @@ import { useEffect, useState } from "react";
 import AuthenticatedHeaderProfile from "../components/AuthenticatedHeaderProfile";
 import AuthenticatedBodyProfile from "../components/AuthenticatedBodyProfile";
 import { getUserIdFromJWT } from "../api/common";
+import { useQueryClient } from "@tanstack/react-query";
 
 function ProfilePage() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [JWToken, setJWToken] = useState<string>();
   const [userId, setUserId] = useState<string>();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     if (JWToken) {
@@ -23,10 +25,12 @@ function ProfilePage() {
   useEffect(() => {}, [isAuthenticated]);
 
   useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: ["get-user"] });
     if (getUserIdFromJWT()) {
       setUserId(getUserIdFromJWT());
       setIsAuthenticated(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (

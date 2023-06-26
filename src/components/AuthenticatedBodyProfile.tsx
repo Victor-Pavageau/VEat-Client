@@ -1,8 +1,9 @@
 import { Button, Form, Input } from "antd";
 import { AiFillEdit, AiOutlineDelete } from "react-icons/ai";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useGetUserById } from "../hooks/useGetUserById";
-import { logOutUser } from "../api/user";
+import { logOutUser, UpdateUser, updateUser } from "../api/user";
+import { useQueryClient } from "@tanstack/react-query";
 
 type Props = {
   userId?: string;
@@ -13,22 +14,48 @@ type Props = {
 function AuthenticatedBodyProfile(props: Props) {
   const { userId, JWToken, setAuthenticatedUser } = props;
 
+  const [form] = Form.useForm();
+
+  const queryClient = useQueryClient();
   const { data: user } = useGetUserById(userId!);
   const [isNameDisabled, setIsNameDisabled] = useState(true);
   const [isSurameDisabled, setIsSurameDisabled] = useState(true);
   const [isAddressDisabled, setIsAddressDisabled] = useState(true);
   const [isPhoneDisabled, setIsPhoneDisabled] = useState(true);
-  const [isEmailDisabled, setIsEmailDisabled] = useState(true);
+  const [isPasswordDisabled, setIsPasswordDisabled] = useState(true);
 
-  const onFinish = (values: any) => {
-    // TODO : Link this with the API
-    console.log("Success:", values);
+  useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: ["get-user"] });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const onFinish = async (values: any) => {
+    if (userId) {
+      const userInfo: UpdateUser = {
+        address: values.address,
+        phoneNumber: values.phone,
+        type: "Client",
+        username: {
+          name: values.name,
+          surname: values.surname,
+        },
+      };
+      await updateUser(userId, userInfo);
+    }
   };
+
+  useEffect(() => {
+    form.setFieldValue("name", user?.username.name);
+    form.setFieldValue("surname", user?.username.surname);
+    form.setFieldValue("address", user?.address.fullAddress);
+    form.setFieldValue("phone", user?.phoneNumber);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   return (
     <>
       {user ? (
-        <Form initialValues={{ remember: true }} onFinish={onFinish}>
+        <Form onFinish={onFinish} form={form}>
           <div className="flex flex-col px-12 pt-8 text-[--gray] gap-y-2">
             <div className="flex gap-3">
               <div className="flex flex-col gap-1">
@@ -51,7 +78,7 @@ function AuthenticatedBodyProfile(props: Props) {
                           setIsNameDisabled(false);
                         }}
                       >
-                        <AiFillEdit size={20} />{" "}
+                        <AiFillEdit size={20} />
                       </Button>
                     }
                   />
@@ -143,19 +170,20 @@ function AuthenticatedBodyProfile(props: Props) {
           </div>
           <div className="flex flex-col px-12 pt-1 text-[--gray] gap-y-2">
             <div className="flex flex-col gap-1">
-              Email
-              <Form.Item required name={"email"} initialValue={user.email}>
+              Password
+              <Form.Item required name={"email"}>
                 <Input
                   required
                   className="bg-[--light-gray] hover:bg-[--light-gray] focus:bg-[--light-gray]"
-                  disabled={isEmailDisabled}
+                  disabled={isPasswordDisabled}
+                  type="password"
                   bordered={false}
                   suffix={
                     <Button
                       type="ghost"
                       className="flex items-center justify-center p-1"
                       onClick={() => {
-                        setIsEmailDisabled(false);
+                        setIsPasswordDisabled(false);
                       }}
                     >
                       <AiFillEdit size={20} />
