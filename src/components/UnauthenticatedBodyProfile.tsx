@@ -102,6 +102,7 @@ function UnauthenticatedBodyProfile(props: Props) {
           type="primary"
           ghost
           size="large"
+          href="https://veat.delta-cognition.com/"
         >
           <div className="flex justify-center items-center mx-1 gap-2 text-sm">
             <FcGoogle size={20} /> Connect with Google
@@ -110,7 +111,7 @@ function UnauthenticatedBodyProfile(props: Props) {
       </div>
       <div className="flex flex-col px-12 mt-10 pb-3 text-[--gray]">
         <div>
-          If you don't have an account, please,{" "}
+          If you don't have an account, please,
           <b
             className="text-[--orange] underline"
             onClick={() => {

@@ -14,16 +14,13 @@ export type userType =
 export type User = {
   uid: string;
   type: userType;
-  username: {
-    name: string;
-    surname: string;
-  };
-  address: {
-    longitude?: string;
-    latitude?: string;
-    fullAddress: string;
-  };
+  name: string;
+  surname: string;
+  fullAddress: string;
   phoneNumber: string;
+  latitude: number;
+  longitude: number;
+  password: string;
   email: string;
   note?: number;
   referedBy?: string;
@@ -32,24 +29,21 @@ export type User = {
 
 export type CreateUser = {
   type: userType;
-  username: {
-    name: string;
-    surname: string;
-  };
+  name: string;
+  surname: string;
   password: string;
-  address: string;
+  fullAddress: string;
   phoneNumber: string;
   email: string;
 };
 
 export type UpdateUser = {
   type: userType;
-  username: {
-    name: string;
-    surname: string;
-  };
-  address: string;
+  name: string;
+  surname: string;
+  fullAddress: string;
   phoneNumber: string;
+  password?: string
 };
 
 export type Coordinates = {
@@ -72,7 +66,7 @@ export const logInUser = async (email: string, password: string): Promise<LogIn>
   return await axios
     .request<LogIn>({
       method: "POST",
-      url: `${baseUrl}/auth/login`,
+      url: `${baseUrl}/auth/login/client`,
       headers: {
         Authorization: getJWT(),
       },
@@ -81,7 +75,7 @@ export const logInUser = async (email: string, password: string): Promise<LogIn>
         password: password
       }
     })
-    .then((result) => result.data);
+    .then((result) => result.data)
 };
 
 export const logOutUser = async (token: string) => {

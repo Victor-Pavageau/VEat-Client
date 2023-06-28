@@ -10,7 +10,7 @@ function App() {
     <ConfigProvider
       theme={{
         token: {
-          colorPrimary: '#000000',
+          colorPrimary: "#000000",
         },
       }}
     >
@@ -18,7 +18,7 @@ function App() {
         <RouteHandler />
       </QueryClientProvider>
     </ConfigProvider>
-  )
+  );
 }
 
 export default App;
