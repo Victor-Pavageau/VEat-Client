@@ -17,11 +17,11 @@ function RestaurantCardList(props: Props) {
     <>
       <div className="text-xs text-[--gray] mt-2">
         {restaurantList.length} restaurants found.
-        <div className="h-[50vh] overflow-y-auto mt-2 text-base text-black">
+        <div className="h-[50vh] overflow-y-auto mt-2 text-base text-black sm:grid md:grid-cols-2 xl:grid-cols-3 mx-auto">
           {restaurantList.map((restaurant) => {
             return (
               <div
-                className="bg-white mb-7 rounded-2xl flex shadow-md h-36"
+                className="bg-white mb-7 rounded-2xl flex shadow-md h-36 sm:w-80"
                 key={nanoid()}
                 onClick={() => {
                   navigate(tp("/restaurant/:restaurantId", [restaurant.uid]));

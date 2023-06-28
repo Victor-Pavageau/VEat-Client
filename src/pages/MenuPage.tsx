@@ -1,7 +1,7 @@
 import { useNavigate, useParams } from "react-router-dom";
 import "./MenuPage.css";
 import { FiChevronLeft } from "react-icons/fi";
-import { Button, Collapse, notification, Spin } from "antd";
+import { Button, notification, Spin } from "antd";
 import React, { useMemo } from "react";
 import { LocalOrder } from "../api/order";
 import { nanoid } from "nanoid";
@@ -9,6 +9,7 @@ import { useGetMenuById } from "../hooks/useGetMenuById";
 import { tp } from "../routing";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Menu } from "../api/restaurant";
+import ArticleDetails from "../components/ArticleDetails";
 
 function MenuPage() {
   const { menuId } = useParams();
@@ -117,18 +118,12 @@ function MenuPage() {
                 <div className="mt-14 text-2xl font-bold flex flex-col justify-end items-end w-full gap-3">
                   {menu.articles.map((article) => {
                     return (
-                      <Collapse
+                      <div
                         key={nanoid()}
-                        className="bg-[--light-gray]"
-                        items={[
-                          {
-                            key: article.articleId,
-                            label: article.articleId,
-                            children: <div>Show informations</div>,
-                          },
-                        ]}
-                        bordered={false}
-                      />
+                        className="w-full flex justify-center items-center flex-col"
+                      >
+                        <ArticleDetails articleId={article.articleId} />
+                      </div>
                     );
                   })}
                 </div>

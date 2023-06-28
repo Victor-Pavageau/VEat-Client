@@ -23,7 +23,6 @@ export type Menu = {
   price: number;
   articles: {
     articleId: string;
-    quantity: number;
   }[];
 };
 
@@ -39,17 +38,13 @@ export type Restaurant = {
   logo: string;
   menus?: Menu[];
   articles?: Article[];
-  schedule: [
-    {
-      day: string;
-      timeSpan: [
-        {
-          openTime: string;
-          closureTime: string;
-        }
-      ];
-    }
-  ];
+  schedule: {
+    day: string;
+    timeSpan: {
+      openTime: string;
+      closureTime: string;
+    }[]
+  }[]
 };
 
 type GetAllRestaurantsResponse = {

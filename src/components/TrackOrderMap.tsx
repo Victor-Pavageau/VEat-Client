@@ -38,11 +38,6 @@ function TrackOrderMap(props: Props) {
           Number(selectedRestaurant.address.latitude),
           Number(selectedRestaurant.address.longitude),
         ]}
-        eventHandlers={{
-          click: () => {
-            // TODO : Add onClick event
-          },
-        }}
         icon={L.icon({
           iconUrl: restaurantMarker,
           iconSize: [30, 45],
@@ -51,11 +46,6 @@ function TrackOrderMap(props: Props) {
       ></Marker>
       <Marker
         position={[userCoordinates.latitude, userCoordinates.longitude]}
-        eventHandlers={{
-          click: () => {
-            // TODO : Add onClick event
-          },
-        }}
         icon={L.icon({
           iconUrl: userMarker,
           iconSize: [30, 45],

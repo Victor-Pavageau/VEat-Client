@@ -28,13 +28,14 @@ function MapPage(props: Props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (user && user.address.latitude && user.address.longitude) {
+    if (user && user.latitude && user.longitude) {
       setUserLatLong({
-        latitude: Number(user.address.latitude),
-        longitude: Number(user.address.longitude),
+        latitude: Number(user.latitude),
+        longitude: Number(user.longitude),
       });
     }
-  }, [user, userLatLong]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [user]);
 
   useEffect(() => {
     if (userLatLong === undefined) {
@@ -66,7 +67,7 @@ function MapPage(props: Props) {
               )
             ) : (
               <ParseRestaurantMap
-                userCoordinates={userCoordinates}
+                userCoordinates={userLatLong}
                 setSelectedRestaurant={setSelectedRestaurant}
               />
             )}
