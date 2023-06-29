@@ -71,6 +71,13 @@ type GetMenuByIdResponse = {
   menu: Menu;
 };
 
+type GetArticleListResponse = {
+  state: string;
+  message: string;
+  article: Article[];
+};
+
+
 export const fetchAllRestaurants = async (): Promise<Restaurant[]> => {
   return await axios
     .request<GetAllRestaurantsResponse>({
@@ -123,4 +130,21 @@ export const fetchMenuById = async (
       },
     })
     .then((result) => result.data.menu);
+};
+
+
+export const fetchArticlesList = async (
+  articleIdList: string[]
+): Promise<Article[]> => {
+  console.log(articleIdList);
+
+  return await axios
+    .request<GetArticleListResponse>({
+      method: "GET",
+      url: `${baseUrl}/restaurants/articles?uidlist={${articleIdList.join(",")}}`,
+      headers: {
+        Authorization: getJWT(),
+      },
+    })
+    .then((result) => result.data.article);
 };

@@ -4,21 +4,19 @@ import { FiChevronLeft } from "react-icons/fi";
 import { Button, notification, Spin } from "antd";
 import React, { useMemo } from "react";
 import { LocalOrder } from "../api/order";
-import { nanoid } from "nanoid";
 import { useGetMenuById } from "../hooks/useGetMenuById";
 import { tp } from "../routing";
 import { LoadingOutlined } from "@ant-design/icons";
 import { Menu } from "../api/restaurant";
-import ArticleDetails from "../components/ArticleDetails";
 
 function MenuPage() {
   const { menuId } = useParams();
   const { data: menu, isLoading } = useGetMenuById(menuId!);
   const navigate = useNavigate();
   const Context = React.createContext({ name: "Default" });
-
   const [api, contextHolder] = notification.useNotification();
   const contextValue = useMemo(() => ({ name: "Notification" }), []);
+  // const { data: articleList } = useGetArticleList(articleIdList);
 
   const openSuccessNotification = (message: string) => {
     api.success({
@@ -28,6 +26,14 @@ function MenuPage() {
       },
     });
   };
+
+  // useEffect(() => {
+  //   const articleList: string[] = [];
+  //   menu?.articles.forEach((article) => {
+  //     articleList.push(article.articleId);
+  //   });
+  //   setArticleIdList(articleList);
+  // }, [menu]);
 
   const addMenu = (menu: Menu) => {
     const order = localStorage.getItem("order");
@@ -109,24 +115,26 @@ function MenuPage() {
                 className="w-64 h-auto z-50"
               />
             </div>
-            <div className="absolute bg-white left-0 right-0 top-56 rounded-t-[2.5rem]">
+            <div className="absolute bg-white bottom-0 left-0 right-0 top-56 rounded-t-[2.5rem]">
               <div className="flex flex-col justify-center items-center mt-40 mx-10">
                 <h1 className="font-bold">{menu.name}</h1>
                 <div className="mt-14 text-sm text-[--gray] leading-6 font-light">
                   {menu.description}
                 </div>
-                <div className="mt-14 text-2xl font-bold flex flex-col justify-end items-end w-full gap-3">
-                  {menu.articles.map((article) => {
-                    return (
-                      <div
-                        key={nanoid()}
-                        className="w-full flex justify-center items-center flex-col"
-                      >
-                        <ArticleDetails articleId={article.articleId} />
-                      </div>
-                    );
-                  })}
-                </div>
+                {
+                  // <div className="mt-14 text-2xl font-bold flex flex-col justify-end items-end w-full gap-3">
+                  //   {menu.articles?.map((article) => {
+                  //     return (
+                  //       <div
+                  //         key={nanoid()}
+                  //         className="w-full flex justify-center items-center flex-col"
+                  //       >
+                  //         <ArticleDetailsList articleId={article.articleId} />
+                  //       </div>
+                  //     );
+                  //   })}
+                  // </div>
+                }
                 <div className="mt-14 text-2xl font-bold flex justify-end items-end w-full">
                   {menu.price} €
                 </div>

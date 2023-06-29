@@ -12,6 +12,7 @@ import { Tag } from "./api/common";
 import ArticlePage from "./pages/ArticlePage";
 import { Coordinates } from "./api/user";
 import MenuPage from "./pages/MenuPage";
+import { io } from "socket.io-client";
 
 export type Path =
   | "/"
@@ -31,6 +32,13 @@ export const tp = (path: Path, replace?: string[]): Path | string => {
   }
   return replacePlaceholders(path, replace);
 };
+
+const socket = io("localhost", {
+  path: "/socket.io/",
+  query: {
+    clientId: "be86c86d-67af-411a-9334-db29a9229153",
+  },
+});
 
 const replacePlaceholders = (url: Path, replaceArray: string[]): string => {
   const expression = /:[\w-_]+/g;
@@ -52,6 +60,16 @@ function RouteHandler(): JSX.Element {
   const [userCoordinates, setUserCoordinates] = useState<
     Coordinates | undefined
   >();
+
+  useEffect(() => {
+    socket.on("message", (message) => {
+      console.log("Received server message:", message);
+    });
+
+    return () => {
+      socket.off("message");
+    };
+  }, []);
 
   const getLocation = () => {
     navigator.geolocation.getCurrentPosition(
