@@ -8,11 +8,12 @@ import NotFoundPage from "./pages/NotFoundPage";
 import ForgotPassword from "./pages/ForgotPassword";
 import CreateAccount from "./pages/CreateAccount";
 import { useEffect, useState } from "react";
-import { Tag } from "./api/common";
+import { getUserIdFromJWT, Tag } from "./api/common";
 import ArticlePage from "./pages/ArticlePage";
 import { Coordinates } from "./api/user";
 import MenuPage from "./pages/MenuPage";
 import { io } from "socket.io-client";
+import { Restaurant } from "./api/restaurant";
 
 export type Path =
   | "/"
@@ -33,13 +34,6 @@ export const tp = (path: Path, replace?: string[]): Path | string => {
   return replacePlaceholders(path, replace);
 };
 
-const socket = io("localhost", {
-  path: "/socket.io/",
-  query: {
-    clientId: "be86c86d-67af-411a-9334-db29a9229153",
-  },
-});
-
 const replacePlaceholders = (url: Path, replaceArray: string[]): string => {
   const expression = /:[\w-_]+/g;
   const array = url.match(expression) as string[];
@@ -55,10 +49,20 @@ const replacePlaceholders = (url: Path, replaceArray: string[]): string => {
   return result;
 };
 
+const socket = io("localhost", {
+  path: "/socket.io/",
+  query: {
+    clientId: getUserIdFromJWT(),
+  },
+});
+
 function RouteHandler(): JSX.Element {
   const [selectedFilterList, setSelectedFilterList] = useState<Tag[]>([]);
   const [userCoordinates, setUserCoordinates] = useState<
     Coordinates | undefined
+  >();
+  const [selectedRestaurant, setSelectedRestaurant] = useState<
+    Restaurant | undefined
   >();
 
   useEffect(() => {
@@ -121,11 +125,16 @@ function RouteHandler(): JSX.Element {
       />
       <Route
         path={tp("/restaurant/:restaurantId")}
-        element={<RestaurantPage />}
+        element={
+          <RestaurantPage setSelectedRestaurant={setSelectedRestaurant} />
+        }
       />
       <Route path={tp("/article/:articleId")} element={<ArticlePage />} />
       <Route path={tp("/menu/:menuId")} element={<MenuPage />} />
-      <Route path={tp("/cart")} element={<CartPage />} />
+      <Route
+        path={tp("/cart")}
+        element={<CartPage selectedRestaurant={selectedRestaurant} />}
+      />
       <Route path={tp("/profile")} element={<ProfilePage />} />
       <Route path={tp("/profile/create-account")} element={<CreateAccount />} />
       <Route

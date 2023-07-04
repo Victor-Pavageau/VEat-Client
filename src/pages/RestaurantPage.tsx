@@ -11,7 +11,12 @@ import { Restaurant } from "../api/restaurant";
 import { useEffect, useState } from "react";
 import { PiWarningCircleLight } from "react-icons/pi";
 
-function RestaurantPage() {
+type Props = {
+  setSelectedRestaurant: (restaurant: Restaurant | undefined) => void;
+};
+
+function RestaurantPage(props: Props) {
+  const { setSelectedRestaurant } = props;
   const { restaurantId } = useParams();
   const { data: restaurant, isLoading } = useGetRestaurantById(restaurantId!);
   const navigate = useNavigate();
@@ -49,6 +54,11 @@ function RestaurantPage() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [restaurant]);
+
+  useEffect(() => {
+    setSelectedRestaurant(restaurant);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isModalOpen]);
 
   return (
     <>

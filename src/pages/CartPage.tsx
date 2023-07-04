@@ -1,13 +1,22 @@
 import { FiChevronLeft } from "react-icons/fi";
 import NavBar from "../components/NavBar";
 import { useEffect, useState } from "react";
-import { LocalOrder } from "../api/order";
+import { createOrder, LocalOrder, SendOrder } from "../api/order";
 import CartItem from "../components/CartItem";
 import { nanoid } from "nanoid";
 import { Button } from "antd";
+import { useGetUserById } from "../hooks/useGetUserById";
+import { getUserIdFromJWT } from "../api/common";
+import { Restaurant } from "../api/restaurant";
 
-function CartPage() {
+type Props = {
+  selectedRestaurant: Restaurant | undefined;
+};
+
+function CartPage(props: Props) {
+  const { selectedRestaurant } = props;
   const [order, setOrder] = useState<LocalOrder[]>();
+  const { data: user } = useGetUserById(getUserIdFromJWT()!);
 
   const deliveryFees = 3.5;
 
@@ -33,6 +42,51 @@ function CartPage() {
       });
     }
     return Number(subtotal.toFixed(2));
+  };
+
+  const sendOrderServer = async () => {
+    const orderArticleDetails: {
+      itemID: string;
+      itemType: "menu" | "article";
+      quantity: Number;
+    }[] = [];
+    if (order) {
+      order.forEach((item) => {
+        orderArticleDetails.push({
+          itemID: item.itemId,
+          itemType: item.itemType,
+          quantity: item.quantity,
+        });
+      });
+    }
+    if (user && selectedRestaurant) {
+      const orderToSend: SendOrder = {
+        addresses: {
+          clientAddress: user.fullAddress,
+          restaurantAddress: selectedRestaurant.address.fullAddress,
+        },
+        clientId: user.uid,
+        dates: {
+          orderTimestamp: Date.now(),
+          deliveryTimestamp: undefined,
+        },
+        driverId: undefined,
+        isApprovedByDriver: false,
+        isApprovedByRestaurant: false,
+        isDelivered: false,
+        isHidden: false,
+        price: {
+          fees: deliveryFees,
+          subtotal: getSubtotal(),
+          totalPrice: getSubtotal() + deliveryFees,
+        },
+        restaurantId: selectedRestaurant.uid,
+        orderDetails: orderArticleDetails,
+      };
+      console.log("monday");
+
+      await createOrder(orderToSend);
+    }
   };
 
   return (
@@ -84,7 +138,7 @@ function CartPage() {
                       type="primary"
                       size="large"
                       onClick={() => {
-                        // TODO : Send order to back here
+                        sendOrderServer();
                         // TODO : Redirect to the map page to track the delivery
                       }}
                     >

@@ -1,3 +1,8 @@
+import axios from "axios";
+import { getJWT } from "./common";
+
+const baseUrl = `http://${process.env.REACT_APP_REVERSE_PROXY}`;
+
 export type Order = {
   uid: string;
   addresses: {
@@ -32,6 +37,34 @@ export type Order = {
   orderDetails: LocalOrder[];
 };
 
+export type SendOrder = {
+  addresses: {
+    restaurantAddress: string,
+    clientAddress: string
+  },
+  price: {
+    subtotal: Number,
+    fees: Number,
+    totalPrice: Number
+  },
+  dates: {
+    orderTimestamp: Number,
+    deliveryTimestamp: Number | undefined
+  },
+  clientId: string,
+  restaurantId: string,
+  driverId: string | undefined,
+  isApprovedByRestaurant: boolean,
+  isApprovedByDriver: boolean,
+  isDelivered: boolean,
+  isHidden: boolean,
+  orderDetails: {
+    itemType: "menu" | "article",
+    itemID: string,
+    quantity: Number
+  }[]
+}
+
 export type LocalOrder = {
   itemType: "menu" | "article";
   itemName: string;
@@ -39,4 +72,18 @@ export type LocalOrder = {
   description: string;
   itemId: string;
   quantity: number;
+};
+
+export const createOrder = async (
+  user: SendOrder
+) => {
+  return await axios
+    .request({
+      method: "POST",
+      url: `${baseUrl}/order/order`,
+      headers: {
+        Authorization: getJWT(),
+      },
+      data: user
+    })
 };
